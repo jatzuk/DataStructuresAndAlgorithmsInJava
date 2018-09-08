@@ -1,14 +1,12 @@
 package chapter2
 
-import java.util.*
-
 /**
  * Created by Jatzuk on 06.09.2018
  */
 
 open class HighArray(max: Int) {
-    protected val array = IntArray(max) { 0 }
-    protected var size = 0
+    val array = IntArray(max) { 0 }
+    var size = 0
 
     //    changed return type to Int for ex 2.3
     open fun find(key: Int): Int {
@@ -51,30 +49,29 @@ open class HighArray(max: Int) {
     fun clear() {
         while (size-- > 1) array[size] = 0
     }
+
+    fun noDumps() {
+        if (size == 1 || size == 0) return
+
+        for (i in 0 until size) {
+            var min = i
+            for (j in i + 1 until size) if (array[j] < array[min]) min = j
+            if (min != i) {
+                val tmp = array[i]
+                array[i] = array[min]
+                array[min] = tmp
+            }
+        }
+
+        var j = 0
+        for (i in 1 until size) if (array[i] > array[i - 1]) array[j++] = array[i]
+        size -= j + 1
+    }
+
+    operator fun get(index: Int): Int = array[index]
 }
 
-/*
-fun main(args: Array<String>) {
-    val array = HighArray(10)
-    for (i in 0 until 10) array.insert(i)
-    array.display()
-
-    val result = array.find(0b100)
-    println(result)
-
-    println(array.delete(2))
-    array.display()
-    println(array.delete(5))
-    println(array.delete(0))
-    array.display()
-    println(array.delete(4))
-    array.display()
-
-    array.insert(100)
-    println(array.getMax())
-    println(array.removeMax())
-    array.display()
-
+/*fun main(args: Array<String>) {
 //    insertion sort stupid
     array.clear()
     for (i in 0 until 10) array.insert((Math.random() * 10).toInt() + 1)
