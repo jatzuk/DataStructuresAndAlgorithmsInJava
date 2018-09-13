@@ -11,20 +11,20 @@ class BubbleSort(max: Int) : HighArray(max) {
 
     fun bubbleSort() {
         swapped = false
-        mainLoop@ for (i in size - 1 downTo 1) {
+        for (i in size - 1 downTo 1) {
             swapped = false
             for (j in 0 until i) if (array[j] > array[j + 1]) swap(j, j + 1)
-            if (!swapped) break@mainLoop
+            if (!swapped) break
         }
     }
 
     fun cocktailShakerSort() {
         swapped = false
-        mainLoop@ for (i in size - 1 downTo 1) {
+        for (i in size - 1 downTo 1) {
             swapped = false
             for (j in 0 until i) if (array[j] > array[j + 1]) swap(j, j + 1)
             for (j in i - 1 downTo 1) if (array[j] < array[j - 1]) swap(j, j - 1)
-            if (!swapped) break@mainLoop
+            if (!swapped) break
         }
     }
 
