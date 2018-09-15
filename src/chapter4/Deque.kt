@@ -10,8 +10,10 @@ class Deque(maxSize: Int) : Queue(maxSize) {
     }
 
     fun removeRight(): Int {
+        val tmp = array[rear--]
+        if (rear <= 0) rear = size - 1
         size--
-        return array[rear--]
+        return tmp
     }
 
     fun insertLeft(n: Int) {
@@ -25,16 +27,4 @@ class Deque(maxSize: Int) : Queue(maxSize) {
         if (front >= size - 1) front = 0
         return tmp
     }
-}
-
-fun main(args: Array<String>) {
-    val deque = Deque(5)
-    deque.insertRight(4)
-    deque.insertRight(7)
-    deque.removeRight()
-    deque.insertRight(7)
-    deque.insertLeft(3)
-    deque.removeLeft()
-
-    deque.display()
 }
