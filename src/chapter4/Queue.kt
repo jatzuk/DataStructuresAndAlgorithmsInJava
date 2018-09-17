@@ -31,7 +31,7 @@ open class Queue(private val maxSize: Int) {
 
     fun size() = size
 
-    fun display() {
+    open fun display() {
         var head = front
         for (i in 0 until size) {
             if (head == maxSize || head == size) head = 0
