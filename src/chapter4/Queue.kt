@@ -10,20 +10,20 @@ open class Queue(private val maxSize: Int) {
     var rear = -1
     protected var size = 0
 
-    fun insert(n: Int) {
+    open fun insert(n: Int) {
         if (rear == maxSize - 1) rear = -1
         array[++rear] = n
         size++
     }
 
-    fun remove(): Int {
+    open fun remove(): Int {
         val tmp = array[front++]
         if (front == maxSize) front = 0
         size--
         return tmp
     }
 
-    fun peekFront() = array[front]
+    open fun peekFront() = array[front]
 
     fun isEmpty() = size == 0
 

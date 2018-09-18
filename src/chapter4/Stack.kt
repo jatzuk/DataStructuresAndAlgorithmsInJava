@@ -9,15 +9,45 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException
 
 class Stack(maxSize: Int) : Deque(maxSize) {
     fun push(item: Int) {
-        insert(item)
+        super.insert(item)
     }
 
-    fun pop() = removeRight()
+    fun pop() = super.removeRight()
 
     fun peek() = array[rear]
 
     @Throws(NotImplementedException::class)
     override fun display() {
+        throw NotImplementedException()
+    }
+
+    @Throws(NotImplementedException::class)
+    override fun insert(n: Int) {
+        throw NotImplementedException()
+    }
+
+    @Throws(NotImplementedException::class)
+    override fun remove(): Int {
+        throw NotImplementedException()
+    }
+
+    @Throws(NotImplementedException::class)
+    override fun removeRight(): Int {
+        throw NotImplementedException()
+    }
+
+    @Throws(NotImplementedException::class)
+    override fun removeLeft(): Int {
+        throw NotImplementedException()
+    }
+
+    @Throws(NotImplementedException::class)
+    override fun insertRight(n: Int) {
+        throw NotImplementedException()
+    }
+
+    @Throws(NotImplementedException::class)
+    override fun insertLeft(n: Int) {
         throw NotImplementedException()
     }
 }
