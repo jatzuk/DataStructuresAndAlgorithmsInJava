@@ -8,19 +8,10 @@ class CyclicalList<T> {
     var cur: Link<T>? = null
         private set
 
-    private var size = 0
-
     fun insert(value: T) {
         val link = Link<T>(value)
-        size++
-        if (isEmpty()) {
-            cur = link
-            return
-        } else {
-//            var tmp = cur
-            for (i in 0 until size - 1) cur?.next
-            cur?.next = link
-        }
+        link.next = cur
+        cur = link
     }
 
     fun step(): Link<T>? {
@@ -29,9 +20,14 @@ class CyclicalList<T> {
     }
 
     fun find(value: T): Boolean {
+        if (isEmpty()) {
+            println("Cyclical list is empty")
+            return false
+        }
         var ptr: Link<T>? = Link(value)
-        while ({ ptr = step(); ptr }() != null) {
-            if (ptr?.data == value) return true
+        while (ptr != null) {
+            if (ptr.data == value) return true
+            ptr = ptr.next
         }
         return false
     }
@@ -43,7 +39,16 @@ class CyclicalList<T> {
     fun isEmpty() = cur == null
 
     fun size(): Int {
-        return 0
+        return if (isEmpty()) 0
+        else {
+            var size = 0
+            var ptr = cur
+            while (ptr != null) {
+                size++
+                ptr = ptr.next
+            }
+            size
+        }
     }
 
     fun display() {
@@ -51,17 +56,11 @@ class CyclicalList<T> {
             println("Cyclical list is empty")
             return
         }
-        var ptr: Link<T>? = cur
+        var ptr = cur
         while (ptr != null) {
             ptr.displayLink()
-            ptr = cur?.next
+            ptr = ptr.next
         }
-
-//        var ptr = cur
-//        for (i in 0 until size) {
-//            ptr?.displayLink()
-//            ptr = ptr?.next
-//        }
     }
 
     inner class Link<T>(internal val data: T) {
@@ -71,12 +70,4 @@ class CyclicalList<T> {
             print("{$data} ")
         }
     }
-}
-
-fun main(args: Array<String>) {
-    val cl = CyclicalList<Int>()
-    cl.insert(1)
-    cl.insert(2)
-    cl.insert(3)
-    cl.display()
 }
