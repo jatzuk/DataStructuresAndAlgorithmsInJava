@@ -5,8 +5,9 @@ package chapter5
  */
 
 class LinkList {
-    private var first: Link? = null
-    private var last: Link? = null
+    var first: Link? = null
+    var last: Link? = null
+    val iterator = ListIterator(this)
 
     fun insertFirst(value: Int) {
         val link = Link(value)
@@ -124,19 +125,6 @@ class LinkList {
             println("Link list is empty")
             return
         }
-        var current = first
-        while (current != null) {
-            current.displayLink()
-            current = current.next
-        }
-        println()
-    }
-
-    fun displayForward() {
-        if (isEmpty()) {
-            println("Link list is empty")
-            return
-        }
         println("first --> last")
         var current = first
         while (current != null) {
@@ -146,11 +134,12 @@ class LinkList {
         println()
     }
 
-    fun displayBackward() {
+    fun displayListBackward() {
         if (isEmpty()) {
             println("Link list is empty")
             return
         }
+        println("last --> first")
         var current = last
         while (current != null) {
             current.displayLink()
@@ -168,5 +157,67 @@ class LinkList {
         fun displayLink() {
             print("{$data} ")
         }
+    }
+}
+
+class ListIterator(private val list: LinkList) {
+    var cur: LinkList.Link? = null
+        private set
+    var prev: LinkList.Link? = null
+        private set
+
+    init {
+        reset()
+    }
+
+    fun reset() {
+        cur = list.first
+        prev = null
+    }
+
+    fun atEnd() = cur?.next == null
+
+    fun nextLink(): LinkList.Link? {
+        prev = cur
+        cur = cur?.next
+        return cur
+    }
+
+    fun insertAfterCurrent(value: Int) {
+        val link = list.Link(value)
+        if (list.isEmpty()) {
+            list.first = link
+            cur = link
+        } else {
+            link.next = cur?.next
+            cur?.next = link
+            nextLink()
+        }
+    }
+
+    fun insertBeforeCurrent(value: Int) {
+        val link = list.Link(value)
+        if (prev == null) {
+            link.next = list.first
+            list.first = link
+            reset()
+        } else {
+            link.next = prev?.next
+            prev?.next = link
+            cur = link
+        }
+    }
+
+    fun deleteCurrent(): Int? {
+        val value = cur?.data
+        if (prev == null) {
+            list.first = cur?.next
+            reset()
+        } else {
+            prev?.next = cur?.next
+            if (atEnd()) reset()
+            else cur = cur?.next
+        }
+        return value
     }
 }
