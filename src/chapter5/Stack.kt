@@ -11,14 +11,7 @@ class Stack<T> {
         cyclicalList.insert(item)
     }
 
-    fun pop(): T? {
-        if (isEmpty()) {
-            println("Cyclical stack is empty")
-            return null
-        }
-        cyclicalList.size--
-        return cyclicalList.step()?.data
-    }
+    fun pop() = cyclicalList.remove()
 
     fun isEmpty() = cyclicalList.isEmpty()
 
