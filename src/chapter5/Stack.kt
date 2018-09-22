@@ -16,6 +16,7 @@ class Stack<T> {
             println("Cyclical stack is empty")
             return null
         }
+        cyclicalList.size--
         return cyclicalList.step()?.data
     }
 
@@ -26,7 +27,7 @@ class Stack<T> {
             println("Cyclical stack is empty")
             return null
         }
-        return cyclicalList.cur?.data
+        return cyclicalList.cur?.next?.data
     }
 
     fun display() {
