@@ -4,14 +4,32 @@ package chapter5
  * Created by Jatzuk on 19.09.2018
  */
 
-class CyclicalList<in T> {
+class CyclicalList<T> {
     var cur: Link<T>? = null
-        private set
+//        private set
+    private var size = 0
 
     fun insert(value: T) {
-        val link = Link<T>(value)
-        link.next = cur
-        cur = link
+        val link = Link(value)
+        if (isEmpty()) {
+            cur = link
+            cur?.next = cur
+        } else {
+            link.next = cur?.next
+            cur?.next = link
+        }
+        size++
+    }
+
+    fun remove(): T? {
+        if (isEmpty()) {
+            println("Cyclical list is empty")
+            return null
+        }
+        val tmp = cur?.next?.data
+        cur?.next = cur?.next?.next
+        size--
+        return tmp
     }
 
     fun step(): Link<T>? {
@@ -58,9 +76,10 @@ class CyclicalList<in T> {
             return
         }
         var ptr = cur
-        while (ptr != null) {
-            ptr.displayLink()
-            ptr = ptr.next
+        var s = size
+        while (s-- > 0) {
+            ptr?.displayLink()
+            ptr = ptr?.next
         }
         println()
     }
@@ -72,4 +91,14 @@ class CyclicalList<in T> {
             print("{$data} ")
         }
     }
+}
+
+fun main(args: Array<String>) {
+    val cl = CyclicalList<Int>()
+    cl.insert(2)
+    cl.insert(1)
+    cl.display()
+//    val t = cl.remove()
+//    println(t)
+//    cl.display()
 }
