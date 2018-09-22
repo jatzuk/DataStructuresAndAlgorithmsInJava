@@ -4,7 +4,7 @@ package chapter5
  * Created by Jatzuk on 19.09.2018
  */
 
-class CyclicalList<T> {
+class CyclicalList<in T> {
     var cur: Link<T>? = null
         private set
 
@@ -15,8 +15,9 @@ class CyclicalList<T> {
     }
 
     fun step(): Link<T>? {
+        val tmp = cur
         cur = cur?.next
-        return cur
+        return tmp
     }
 
     fun find(value: T): Boolean {
@@ -61,9 +62,10 @@ class CyclicalList<T> {
             ptr.displayLink()
             ptr = ptr.next
         }
+        println()
     }
 
-    inner class Link<T>(internal val data: T) {
+    inner class Link<out T>(internal val data: T) {
         var next: Link<T>? = null
 
         fun displayLink() {
