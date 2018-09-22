@@ -6,8 +6,9 @@ package chapter5
 
 class CyclicalList<T> {
     var cur: Link<T>? = null
-//        private set
-    private var size = 0
+        private set
+    var size = 0
+        private set
 
     fun insert(value: T) {
         val link = Link(value)
@@ -33,7 +34,7 @@ class CyclicalList<T> {
     }
 
     fun step(): Link<T>? {
-        val tmp = cur
+        val tmp = cur?.next
         cur = cur?.next
         return tmp
     }
@@ -53,29 +54,17 @@ class CyclicalList<T> {
 
     fun clear() {
         cur = null
+        size = 0
     }
 
-    fun isEmpty() = cur == null
-
-    fun size(): Int {
-        return if (isEmpty()) 0
-        else {
-            var size = 0
-            var ptr = cur
-            while (ptr != null) {
-                size++
-                ptr = ptr.next
-            }
-            size
-        }
-    }
+    fun isEmpty() = size == 0
 
     fun display() {
         if (isEmpty()) {
             println("Cyclical list is empty")
             return
         }
-        var ptr = cur
+        var ptr = cur?.next
         var s = size
         while (s-- > 0) {
             ptr?.displayLink()
@@ -91,14 +80,4 @@ class CyclicalList<T> {
             print("{$data} ")
         }
     }
-}
-
-fun main(args: Array<String>) {
-    val cl = CyclicalList<Int>()
-    cl.insert(2)
-    cl.insert(1)
-    cl.display()
-//    val t = cl.remove()
-//    println(t)
-//    cl.display()
 }
