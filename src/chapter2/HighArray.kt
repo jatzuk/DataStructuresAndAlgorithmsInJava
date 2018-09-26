@@ -76,7 +76,7 @@ open class HighArray(max: Int) {
     array.clear()
     for (i in 0 until 10) array.insert((Math.random() * 10).toInt() + 1)
     array.display()
-    val sortedArray = IntArray(array.size) { 0 }
-    for (i in 0 until array.size) sortedArray[i] = array.removeMax()
+    val sortedArray = IntArray(array.length) { 0 }
+    for (i in 0 until array.length) sortedArray[i] = array.removeMax()
     println(Arrays.toString(sortedArray))
 }*/
