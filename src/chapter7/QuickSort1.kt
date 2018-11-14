@@ -6,8 +6,8 @@ import chapter2.HighArray
  * Created by Jatzuk on 28.10.2018
  */
 
-class QuickSort1(size: Int) : HighArray(size) {
-    fun quickSort() {
+open class QuickSort1(size: Int) : HighArray(size) {
+    open fun quickSort() {
         recQuickSort(0, size - 1)
     }
 
@@ -35,7 +35,7 @@ class QuickSort1(size: Int) : HighArray(size) {
         return lp
     }
 
-    private fun swap(a: Int, b: Int) {
+    protected fun swap(a: Int, b: Int) {
         val tmp = array[a]
         array[a] = array[b]
         array[b] = tmp
