@@ -7,6 +7,12 @@ import chapter2.HighArray
  */
 
 open class QuickSort1(size: Int) : HighArray(size) {
+    protected var copies = 0
+        private set
+
+    protected var comparisons = 0
+        private set
+
     open fun quickSort() {
         recQuickSort(0, size - 1)
     }
@@ -39,5 +45,11 @@ open class QuickSort1(size: Int) : HighArray(size) {
         val tmp = array[a]
         array[a] = array[b]
         array[b] = tmp
+        copies += 3
+    }
+
+    protected fun comparing(): Boolean {
+        comparisons++
+        return true
     }
 }
