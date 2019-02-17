@@ -1,8 +1,10 @@
 package chapter6
 
+import org.junit.Test
+
 /*
- * Created with passion and love
- *    for project DataStructuresAndAlgorithmsInJava(Lafore)
+ * Created with passion and love 
+ *    for project DataStructuresAndAlgorithmsInJava
  *        by Jatzuk on 23.10.2018
  *                                            *_____*
  *                                           *_*****_*
@@ -13,12 +15,10 @@ package chapter6
  *                                          *_________*
  *                                           ***___***
  */
-
-fun solveProblem(topN: Int, from: Char, inter: Char, to: Char) {
-    if (topN == 1) println("Disk 1 from $from to $to")
-    else {
-        solveProblem(topN - 1, from, to, inter)
-        println("Disk $topN from $from to $to")
-        solveProblem(topN - 1, inter, from, to)
+    
+class TowerOfHanoiTest {
+    @Test
+    fun solveTowerTest() {
+        solveProblem(3, 'A', 'B', 'C')
     }
 }

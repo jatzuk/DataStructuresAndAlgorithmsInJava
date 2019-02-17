@@ -2,8 +2,18 @@ package chapter6
 
 import chapter2.HighArray
 
-/**
- * Created by Jatzuk on 24.10.2018
+/*
+ * Created with passion and love
+ *    for project DataStructuresAndAlgorithmsInJava
+ *        by Jatzuk on 24.10.2018
+ *                                            *_____*
+ *                                           *_*****_*
+ *                                          *_(O)_(O)_*
+ *                                         **____V____**
+ *                                         **_________**
+ *                                         **_________**
+ *                                          *_________*
+ *                                           ***___***
  */
 
 class MergeSort(maxSize: Int) : HighArray(maxSize) {

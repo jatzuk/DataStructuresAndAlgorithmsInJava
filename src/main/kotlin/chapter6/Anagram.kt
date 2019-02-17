@@ -1,14 +1,29 @@
 package chapter6
 
-/**
- * Created by Jatzuk on 23.09.2018
+import chapter6.ValuesHolder.count
+import chapter6.ValuesHolder.length
+
+/*
+ * Created with passion and love
+ *    for project DataStructuresAndAlgorithmsInJava(Lafore)
+ *        by Jatzuk on 23.09.2018
+ *                                            *_____*
+ *                                           *_*****_*
+ *                                          *_(O)_(O)_*
+ *                                         **____V____**
+ *                                         **_________**
+ *                                         **_________**
+ *                                          *_________*
+ *                                           ***___***
  */
 
-private val arr = "kotlin".toCharArray()
-private val length = arr.size
-private var count = 0
+object ValuesHolder {
+    val arr = "kotlin".toCharArray()
+    val length = arr.size
+    var count = 0
+}
 
-fun anagram(size: Int) {
+fun anagram(size: Int = ValuesHolder.length) {
     if (size == 1) return
     for (i in 0 until size) {
         anagram(size - 1)
@@ -18,21 +33,17 @@ fun anagram(size: Int) {
 }
 
 fun rotate(size: Int) {
-    val pos = length - size
-    val ch = arr[pos]
-    for (i in pos + 1 until length) arr[i - 1] = arr[i]
-    arr[length - 1] = ch
+    val pos = ValuesHolder.length - size
+    val ch = ValuesHolder.arr[pos]
+    for (i in pos + 1 until length) ValuesHolder.arr[i - 1] = ValuesHolder.arr[i]
+    ValuesHolder.arr[length - 1] = ch
 }
 
 fun displayWord() {
     if (count < 99) print(" ")
     if (count < 9) print(" ")
     print("${++count}.")
-    for (i in 0 until length) print(arr[i])
+    for (i in 0 until length) print(ValuesHolder.arr[i])
     print(" ")
     if (count % 6 == 0) println()
-}
-
-fun main(args: Array<String>) {
-    anagram(length)
 }

@@ -2,8 +2,18 @@ package chapter7
 
 import chapter2.HighArray
 
-/**
- * Created by Jatzuk on 28.10.2018
+/*
+ * Created with passion and love
+ *    for project DataStructuresAndAlgorithmsInJava(Lafore)
+ *        by Jatzuk on 28.10.2018
+ *                                            *_____*
+ *                                           *_*****_*
+ *                                          *_(O)_(O)_*
+ *                                         **____V____**
+ *                                         **_________**
+ *                                         **_________**
+ *                                          *_________*
+ *                                           ***___***
  */
 
 class ShellSort(size: Int) : HighArray(size) {

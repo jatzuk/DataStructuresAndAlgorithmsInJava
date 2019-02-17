@@ -1,9 +1,13 @@
 package chapter6
 
+import chapter6.RecursivelyBinarySearch.arr
+import org.junit.Assert.assertEquals
+import org.junit.Test
+
 /*
- * Created with passion and love
- *    for project DataStructuresAndAlgorithmsInJava(Lafore)
- *        by Jatzuk on 23.10.2018
+ * Created with passion and love 
+ *    for project DataStructuresAndAlgorithmsInJava
+ *        by Jatzuk on 23.09.2018
  *                                            *_____*
  *                                           *_*****_*
  *                                          *_(O)_(O)_*
@@ -14,11 +18,9 @@ package chapter6
  *                                           ***___***
  */
 
-fun solveProblem(topN: Int, from: Char, inter: Char, to: Char) {
-    if (topN == 1) println("Disk 1 from $from to $to")
-    else {
-        solveProblem(topN - 1, from, to, inter)
-        println("Disk $topN from $from to $to")
-        solveProblem(topN - 1, inter, from, to)
+class RecursivelyBinarySearchTest {
+    @Test
+    fun recursivelyBinarySearchTest() {
+        assertEquals(1, binarySearchRecursively(2, 0, arr.size - 1))
     }
 }

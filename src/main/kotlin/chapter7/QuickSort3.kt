@@ -1,7 +1,17 @@
 package chapter7
 
-/**
- * Created by Jatzuk on 14.11.2018
+/*
+ * Created with passion and love
+ *    for project DataStructuresAndAlgorithmsInJava(Lafore)
+ *        by Jatzuk on 14.11.2018
+ *                                            *_____*
+ *                                           *_*****_*
+ *                                          *_(O)_(O)_*
+ *                                         **____V____**
+ *                                         **_________**
+ *                                         **_________**
+ *                                          *_________*
+ *                                           ***___***
  */
 
 class QuickSort3(size: Int) : QuickSort2(size) {
