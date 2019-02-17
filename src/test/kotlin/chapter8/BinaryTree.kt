@@ -1,8 +1,9 @@
 package chapter8
 
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
-/* 
+/*
  * Created with passion and love
  *    for project DataStructuresAndAlgorithmsInJava(Lafore)
  *        by Jatzuk on 17.02.2019
@@ -16,10 +17,10 @@ import org.junit.Test
  *                                           ***___***
  */
 
-class TreeTest {
+class BinaryTreeTest {
     @Test
-    fun treeTest() {
-        with(Tree()) {
+    fun intTreeTest() {
+        with(BinaryTree<Int>()) {
             insert(50)
             insert(25)
             insert(75)
@@ -37,6 +38,24 @@ class TreeTest {
             displayTree()
             assertEquals(33, find(33)?.data)
             assertEquals(true, delete(87))
+            displayTree()
+        }
+    }
+
+    @Test
+    fun charTreeTest() {
+        with(BinaryTree<Char>()) {
+            insert('f')
+            insert('c')
+            insert('k')
+            insert('a')
+            insert('b')
+            insert('z')
+            displayTree()
+            insert('o')
+            displayTree()
+            assertEquals('k', find('k')?.data)
+            assertEquals(true, delete('c'))
             displayTree()
         }
     }

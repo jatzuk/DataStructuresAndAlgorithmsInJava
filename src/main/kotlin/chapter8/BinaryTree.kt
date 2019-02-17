@@ -2,7 +2,7 @@ package chapter8
 
 import java.util.*
 
-/* 
+/*
  * Created with passion and love
  *    for project DataStructuresAndAlgorithmsInJava(Lafore)
  *        by Jatzuk on 17.02.2019
@@ -16,7 +16,7 @@ import java.util.*
  *                                           ***___***
  */
 
-open class Tree<T> {
+open class BinaryTree<T> {
     var root: Node<T>? = null
 
     open fun find(key: T): Node<T>? {
@@ -186,6 +186,15 @@ open class Tree<T> {
         }
         repeat(30) { print("."); if (it == 29) println() }
     }
+
+    operator fun <T> T.compareTo(other: T) = when (this) {
+        is Int -> this - other
+        is Char -> this.toInt() - (other as Char).toInt()
+        else -> throw IllegalArgumentException()
+    }
+
+    private operator fun <T> Int.minus(value: T) = this - value as Int
+    private operator fun <T> Char.minus(value: T) = this - value as Int
 }
 
 class Node<T>(var data: T) {
@@ -195,10 +204,4 @@ class Node<T>(var data: T) {
     fun display() {
         print(data)
     }
-
-//    TODO()
-    operator fun compareTo(element: T): Int {
-        return data as Int - element as Int
-    }
 }
-

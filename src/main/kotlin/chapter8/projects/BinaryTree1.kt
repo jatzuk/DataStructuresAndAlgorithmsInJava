@@ -1,9 +1,9 @@
 package chapter8.projects
 
 import chapter8.Node
-import chapter8.Tree
+import chapter8.BinaryTree
 
-/* 
+/*
  * Created with passion and love
  *    for project DataStructuresAndAlgorithmsInJava(Lafore)
  *        by Jatzuk on 17.02.2019
@@ -17,9 +17,9 @@ import chapter8.Tree
  *                                           ***___***
  */
 
-class Tree1 : Tree<Char>() {
+class BinaryTree1 : BinaryTree<Char>() {
     fun buildTreeFromChars(sequence: CharSequence) {
-        val trees = arrayOf<Tree1>()
+        val trees = arrayOf<BinaryTree1>()
 
     }
 
