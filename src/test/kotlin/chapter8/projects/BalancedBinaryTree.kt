@@ -2,10 +2,10 @@ package chapter8.projects
 
 import org.junit.Test
 
-/*
+/* 
  * Created with passion and love
  *    for project DataStructuresAndAlgorithmsInJava(Lafore)
- *        by Jatzuk on 17.02.2019
+ *        by Jatzuk on 18.02.2019
  *                                            *_____*
  *                                           *_*****_*
  *                                          *_(O)_(O)_*
@@ -16,13 +16,9 @@ import org.junit.Test
  *                                           ***___***
  */
 
-class BinaryTree1Test {
+class BalancedBinaryTreeTest {
     @Test
-    fun treeTest() {
-        val sequence = "ABCDE"
-        with(BinaryTree1()) {
-            buildTreeFromChars(sequence)
-            displayTree()
-        }
+    fun balancedTreeTest() {
+        BalancedBinaryTree(('A'..'F').toList().toCharArray()).displayTree()
     }
 }

@@ -1,12 +1,12 @@
 package chapter8.projects
 
-import chapter8.Node
 import chapter8.BinaryTree
+import chapter8.Node
 
-/*
+/* 
  * Created with passion and love
  *    for project DataStructuresAndAlgorithmsInJava(Lafore)
- *        by Jatzuk on 17.02.2019
+ *        by Jatzuk on 18.02.2019
  *                                            *_____*
  *                                           *_*****_*
  *                                          *_(O)_(O)_*
@@ -17,15 +17,9 @@ import chapter8.BinaryTree
  *                                           ***___***
  */
 
-class BinaryTree1 : BinaryTree<Char>() {
-    fun buildTreeFromChars(sequence: CharSequence) {
-        val trees = arrayOf<BinaryTree1>()
+class BalancedBinaryTree(chars: CharArray): BinaryTree<Char>() {
+    init {
 
-    }
-
-    private fun createTree(char: Char): Node<Char> {
-        val node = Node(char)
-        return node
     }
 
     override fun find(key: Char): Node<Char>? {
