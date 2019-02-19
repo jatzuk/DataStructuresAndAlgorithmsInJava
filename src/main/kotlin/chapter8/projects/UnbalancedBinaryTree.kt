@@ -20,10 +20,10 @@ import chapter8.Node
 class UnbalancedBinaryTree(chars: CharArray) : BinaryTree<Char>() {
     init {
         with(arrayOfNulls<Node<Char>>(chars.size - 1)) {
-            repeat(size) {
-                this[it] = Node('+').apply { right = Node(chars[chars.size - 1 - it]) }
-                if (root == null) root = this[it]
-                else this[it - 1]?.left = this[it]
+            repeat(size) { i ->
+                this[i] = Node('+').apply { right = Node(chars[chars.size - 1 - i]) }
+                if (root == null) root = this[i]
+                else this[i - 1]?.left = this[i]
             }
             this[size - 1]?.left = Node(chars[0])
         }
