@@ -45,11 +45,10 @@ class OrderedTree(chars: CharArray) : BinaryTree<Char>() {
         root = insertNode(1, chars)
     }
 
-//    TODO("check error")
     private fun insertNode(position: Int, chars: CharArray): Node<Char>? {
         return if (position > chars.size) null
         else {
-            Node(chars[position]).apply {
+            Node(chars[position - 1]).apply {
                 left = insertNode(2 * position, chars)
                 right = insertNode(2 * position + 1, chars)
             }
