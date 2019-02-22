@@ -140,7 +140,7 @@ open class BinaryTree<T> {
         }
     }
 
-    private fun inOrder(node: Node<T>?) {
+    open fun inOrder(node: Node<T>?) {
         node?.let {
             inOrder(node.left)
             node.display()
