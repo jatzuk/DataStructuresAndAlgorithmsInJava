@@ -47,11 +47,9 @@ class OrderedTree(chars: CharArray) : BinaryTree<Char>() {
 
     private fun insertNode(position: Int, chars: CharArray): Node<Char>? {
         return if (position > chars.size) null
-        else {
-            Node(chars[position - 1]).apply {
-                left = insertNode(2 * position, chars)
-                right = insertNode(2 * position + 1, chars)
-            }
+        else Node(chars[position - 1]).apply {
+            left = insertNode(2 * position, chars)
+            right = insertNode(2 * position + 1, chars)
         }
     }
 
