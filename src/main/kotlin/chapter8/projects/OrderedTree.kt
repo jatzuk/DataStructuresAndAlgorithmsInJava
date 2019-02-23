@@ -1,7 +1,6 @@
 package chapter8.projects
 
 import chapter8.BinaryTree
-import chapter8.Node
 import java.util.*
 
 /* 
@@ -25,7 +24,7 @@ class OrderedTree(chars: CharArray) : BinaryTree<Char>() {
 
     private fun dfsFill(chars: CharArray) {
         var ptr = 0
-        val queue: Queue<Node<Char>> = LinkedList()
+        val queue: Queue<BinaryTree<Char>.Node> = LinkedList()
         root = Node(chars[ptr++])
         with(queue) {
             offer(root)
@@ -45,7 +44,7 @@ class OrderedTree(chars: CharArray) : BinaryTree<Char>() {
         root = insertNode(1, chars)
     }
 
-    private fun insertNode(position: Int, chars: CharArray): Node<Char>? {
+    private fun insertNode(position: Int, chars: CharArray): BinaryTree<Char>.Node? {
         return if (position > chars.size) null
         else Node(chars[position - 1]).apply {
             left = insertNode(2 * position, chars)
@@ -53,7 +52,7 @@ class OrderedTree(chars: CharArray) : BinaryTree<Char>() {
         }
     }
 
-    override fun find(key: Char): Node<Char>? {
+    override fun find(key: Char): BinaryTree<Char>.Node? {
         throw NotImplementedError("operation is not supported")
     }
 

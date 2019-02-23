@@ -1,7 +1,6 @@
 package chapter8.projects
 
 import chapter8.BinaryTree
-import chapter8.Node
 
 /*
  * Created with passion and love
@@ -19,7 +18,7 @@ import chapter8.Node
 
 class UnbalancedBinaryTree(chars: CharArray) : BinaryTree<Char>() {
     init {
-        with(arrayOfNulls<Node<Char>>(chars.size - 1)) {
+        with(arrayOfNulls<BinaryTree<Char>.Node>(chars.size - 1)) {
             repeat(size) { i ->
                 this[i] = Node('+').apply { right = Node(chars[chars.size - 1 - i]) }
                 if (root == null) root = this[i]
@@ -29,7 +28,7 @@ class UnbalancedBinaryTree(chars: CharArray) : BinaryTree<Char>() {
         }
     }
 
-    override fun find(key: Char): Node<Char>? {
+    override fun find(key: Char): BinaryTree<Char>.Node? {
         throw NotImplementedError("operation is not supported")
     }
 

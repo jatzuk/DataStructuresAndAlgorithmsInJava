@@ -1,7 +1,6 @@
 package chapter8.projects
 
 import chapter8.BinaryTree
-import chapter8.Node
 
 /* 
  * Created with passion and love
@@ -19,7 +18,7 @@ import chapter8.Node
 
 class BalancedBinaryTree(chars: CharArray) : BinaryTree<Char>() {
     init {
-        val nodes = arrayOfNulls<Node<Char>>(chars.size)
+        val nodes = arrayOfNulls<BinaryTree<Char>.Node>(chars.size)
         repeat(chars.size) { i -> nodes[i] = Node(chars[i]) }
         var pairs = chars.size
         while (pairs > 1) {
@@ -39,7 +38,7 @@ class BalancedBinaryTree(chars: CharArray) : BinaryTree<Char>() {
         root = nodes[0]
     }
 
-    override fun find(key: Char): Node<Char>? {
+    override fun find(key: Char): BinaryTree<Char>.Node? {
         throw NotImplementedError("operation is not supported")
     }
 

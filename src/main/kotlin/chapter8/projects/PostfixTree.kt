@@ -1,7 +1,6 @@
 package chapter8.projects
 
 import chapter8.BinaryTree
-import chapter8.Node
 import java.util.*
 
 /* 
@@ -20,7 +19,7 @@ import java.util.*
 
 class PostfixTree(expression: CharArray) : BinaryTree<Char>() {
     init {
-        with(ArrayDeque<Node<Char>>()) {
+        with(ArrayDeque<BinaryTree<Char>.Node>()) {
             repeat(expression.size) {
                 val char = expression[it]
                 val node = Node(char)
@@ -36,7 +35,7 @@ class PostfixTree(expression: CharArray) : BinaryTree<Char>() {
         }
     }
 
-    override fun inOrder(node: Node<Char>?) {
+    override fun inOrder(node: BinaryTree<Char>.Node?) {
         node?.let {
             print("(")
             inOrder(node.left)
@@ -46,7 +45,7 @@ class PostfixTree(expression: CharArray) : BinaryTree<Char>() {
         }
     }
 
-    override fun find(key: Char): Node<Char>? {
+    override fun find(key: Char): BinaryTree<Char>.Node? {
         throw NotImplementedError("operation is not supported")
     }
 

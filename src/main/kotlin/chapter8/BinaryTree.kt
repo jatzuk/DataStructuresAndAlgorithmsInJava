@@ -17,9 +17,9 @@ import java.util.*
  */
 
 open class BinaryTree<T> {
-    var root: Node<T>? = null
+    var root: Node? = null
 
-    open fun find(key: T): Node<T>? {
+    open fun find(key: T): Node? {
         var current = root
         while (current?.data != key) {
             if (current == null) return null
@@ -33,7 +33,7 @@ open class BinaryTree<T> {
         if (root == null) root = node
         else {
             var current = root
-            var parent: Node<T>
+            var parent: Node
             while (true) {
                 parent = current!!
                 if (value < current.data) {
@@ -99,7 +99,7 @@ open class BinaryTree<T> {
         return true
     }
 
-    private fun getSuccessor(delNode: Node<T>): Node<T> {
+    private fun getSuccessor(delNode: Node): Node {
         var parent = delNode
         var successor = delNode
         var current = delNode.right
@@ -132,7 +132,7 @@ open class BinaryTree<T> {
         }
     }
 
-    private fun preOrder(node: Node<T>?) {
+    private fun preOrder(node: Node?) {
         node?.let {
             node.display()
             preOrder(node.left)
@@ -140,7 +140,7 @@ open class BinaryTree<T> {
         }
     }
 
-    open fun inOrder(node: Node<T>?) {
+    open fun inOrder(node: Node?) {
         node?.let {
             inOrder(node.left)
             node.display()
@@ -148,7 +148,7 @@ open class BinaryTree<T> {
         }
     }
 
-    private fun postOrder(node: Node<T>?) {
+    private fun postOrder(node: Node?) {
         node?.let {
             postOrder(node.left)
             postOrder(node.right)
@@ -157,13 +157,13 @@ open class BinaryTree<T> {
     }
 
     fun displayTree() {
-        val stack: Deque<Node<T>?> = LinkedList()
+        val stack: Deque<Node?> = LinkedList()
         stack.push(root)
         var blanks = 32
         var isRowEmpty = false
         repeat(30) { print("."); if (it == 29) println() }
         while (!isRowEmpty) {
-            val localStack: Deque<Node<T>?> = LinkedList()
+            val localStack: Deque<Node?> = LinkedList()
             isRowEmpty = true
             repeat(blanks) { print(" ") }
             while (stack.isNotEmpty()) {
@@ -195,13 +195,28 @@ open class BinaryTree<T> {
 
     private operator fun <T> Int.minus(value: T) = this - value as Int
     private operator fun <T> Char.minus(value: T) = this - value as Int
-}
 
-class Node<T>(var data: T) {
-    var left: Node<T>? = null
-    var right: Node<T>? = null
+    inner class Node(var data: T, var frequency: Int = -1) : Comparable<Node> {
+        var left: Node? = null
+        var right: Node? = null
 
-    fun display() {
-        print(data)
+        fun display() {
+//            print("$data")
+            print("($frequency)$data")
+        }
+
+        override fun compareTo(other: Node) = frequency - other.frequency
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+            return data == (other as BinaryTree<*>.Node).data && frequency == other.frequency
+        }
+
+        override fun hashCode(): Int {
+            var result = data?.hashCode() ?: 0
+            result = 31 * result + frequency
+            return result
+        }
     }
 }
