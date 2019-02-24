@@ -1,6 +1,7 @@
 package chapter8.projects
 
 import chapter8.BinaryTree
+import chapter8.DefinitelyNotABinarySearchTree
 
 /*
  * Created with passion and love
@@ -16,7 +17,7 @@ import chapter8.BinaryTree
  *                                           ***___***
  */
 
-class UnbalancedBinaryTree(chars: CharArray) : BinaryTree<Char>() {
+class UnbalancedBinaryTree(chars: CharArray) : DefinitelyNotABinarySearchTree<Char>() {
     init {
         with(arrayOfNulls<BinaryTree<Char>.Node>(chars.size - 1)) {
             repeat(size) { i ->
@@ -26,17 +27,5 @@ class UnbalancedBinaryTree(chars: CharArray) : BinaryTree<Char>() {
             }
             this[size - 1]?.left = Node(chars[0])
         }
-    }
-
-    override fun find(key: Char): BinaryTree<Char>.Node? {
-        throw NotImplementedError("operation is not supported")
-    }
-
-    override fun delete(key: Char): Boolean {
-        throw NotImplementedError("operation is not supported")
-    }
-
-    override fun insert(value: Char) {
-        throw NotImplementedError("operation is not supported")
     }
 }

@@ -1,6 +1,7 @@
 package chapter8.projects
 
 import chapter8.BinaryTree
+import chapter8.DefinitelyNotABinarySearchTree
 
 /* 
  * Created with passion and love
@@ -16,7 +17,7 @@ import chapter8.BinaryTree
  *                                           ***___***
  */
 
-class BalancedBinaryTree(chars: CharArray) : BinaryTree<Char>() {
+class BalancedBinaryTree(chars: CharArray) : DefinitelyNotABinarySearchTree<Char>() {
     init {
         val nodes = arrayOfNulls<BinaryTree<Char>.Node>(chars.size)
         repeat(chars.size) { i -> nodes[i] = Node(chars[i]) }
@@ -36,17 +37,5 @@ class BalancedBinaryTree(chars: CharArray) : BinaryTree<Char>() {
             pairs -= fills
         }
         root = nodes[0]
-    }
-
-    override fun find(key: Char): BinaryTree<Char>.Node? {
-        throw NotImplementedError("operation is not supported")
-    }
-
-    override fun delete(key: Char): Boolean {
-        throw NotImplementedError("operation is not supported")
-    }
-
-    override fun insert(value: Char) {
-        throw NotImplementedError("operation is not supported")
     }
 }

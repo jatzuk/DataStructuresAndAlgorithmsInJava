@@ -1,11 +1,13 @@
-package chapter8.projects.haffmanCoding
+package chapter8.projects.huffmanTree
 
+import chapter8.projects.huffmanTree.HuffmanEncoder.Companion.PATH
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 /*
- * Created with passion and love
- *    for project DataStructuresAndAlgorithmsInJava
- *        by Jatzuk on 23.02.2019
+ * Created with passion and love 
+ *    for project DataStructuresAndAlgorithmsInJava(Lafore)
+ *        by Jatzuk on 24.02.2019
  *                                            *_____*
  *                                           *_*****_*
  *                                          *_(O)_(O)_*
@@ -16,12 +18,9 @@ import org.junit.Test
  *                                           ***___***
  */
 
-class HaffmanEncodingTest {
+class HuffmanDecoderTest {
     @Test
-    fun haffmanEncodingTest() {
-        with(HaffmanEncoding("susie says it is easy")) {
-            buildTree()
-//            displayTree()
-        }
+    fun huffmanDecoderTest() {
+        assertEquals("susie says it is easy", HuffmanDecoder(PATH).message)
     }
 }

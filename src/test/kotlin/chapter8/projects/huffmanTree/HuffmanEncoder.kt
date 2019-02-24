@@ -1,6 +1,6 @@
-package chapter8.projects.haffmanCoding
+package chapter8.projects.huffmanTree
 
-import chapter8.BinaryTree
+import org.junit.Test
 
 /*
  * Created with passion and love
@@ -15,7 +15,10 @@ import chapter8.BinaryTree
  *                                          *_________*
  *                                           ***___***
  */
- 
-class HaffmanDecoding : BinaryTree<Char>() {
 
+class HuffmanEncoderTest {
+    @Test
+    fun huffmanEncodingTest() {
+        HuffmanEncoder("susie says it is easy").displayTree()
+    }
 }

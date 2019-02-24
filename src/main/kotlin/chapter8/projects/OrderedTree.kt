@@ -1,6 +1,7 @@
 package chapter8.projects
 
 import chapter8.BinaryTree
+import chapter8.DefinitelyNotABinarySearchTree
 import java.util.*
 
 /* 
@@ -17,7 +18,7 @@ import java.util.*
  *                                           ***___***
  */
 
-class OrderedTree(chars: CharArray) : BinaryTree<Char>() {
+class OrderedTree(chars: CharArray) : DefinitelyNotABinarySearchTree<Char>() {
     init {
         if (chars.isNotEmpty()) recursivelyFill(chars) // dfsFill(chars)
     }
@@ -50,17 +51,5 @@ class OrderedTree(chars: CharArray) : BinaryTree<Char>() {
             left = insertNode(2 * position, chars)
             right = insertNode(2 * position + 1, chars)
         }
-    }
-
-    override fun find(key: Char): BinaryTree<Char>.Node? {
-        throw NotImplementedError("operation is not supported")
-    }
-
-    override fun delete(key: Char): Boolean {
-        throw NotImplementedError("operation is not supported")
-    }
-
-    override fun insert(value: Char) {
-        throw NotImplementedError("operation is not supported")
     }
 }

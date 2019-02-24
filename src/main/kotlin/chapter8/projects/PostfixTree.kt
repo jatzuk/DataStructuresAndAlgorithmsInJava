@@ -1,6 +1,7 @@
 package chapter8.projects
 
 import chapter8.BinaryTree
+import chapter8.DefinitelyNotABinarySearchTree
 import java.util.*
 
 /* 
@@ -17,7 +18,7 @@ import java.util.*
  *                                           ***___***
  */
 
-class PostfixTree(expression: CharArray) : BinaryTree<Char>() {
+class PostfixTree(expression: CharArray) : DefinitelyNotABinarySearchTree<Char>() {
     init {
         with(ArrayDeque<BinaryTree<Char>.Node>()) {
             repeat(expression.size) {
@@ -43,17 +44,5 @@ class PostfixTree(expression: CharArray) : BinaryTree<Char>() {
             inOrder(node.right)
             print(")")
         }
-    }
-
-    override fun find(key: Char): BinaryTree<Char>.Node? {
-        throw NotImplementedError("operation is not supported")
-    }
-
-    override fun delete(key: Char): Boolean {
-        throw NotImplementedError("operation is not supported")
-    }
-
-    override fun insert(value: Char) {
-        throw NotImplementedError("operation is not supported")
     }
 }
