@@ -1,5 +1,6 @@
 package chapter8
 
+import chapter9.AbstractNode
 import java.util.*
 
 /*
@@ -196,27 +197,13 @@ open class BinaryTree<T> {
     private operator fun <T> Int.minus(value: T) = this - value as Int
     private operator fun <T> Char.minus(value: T) = this - value as Int
 
-    inner class Node(var data: T, var frequency: Int = -1) : Comparable<Node> {
-        var left: Node? = null
-        var right: Node? = null
+    open inner class Node(data: T, var frequency: Int = -1) : AbstractNode<T, Node>(data) {
+        override var left: Node? = null
+        override var right: Node? = null
 
-        fun display() {
+        override fun display() {
 //            print("$data")
             print("($frequency)$data")
-        }
-
-        override fun compareTo(other: Node) = frequency - other.frequency
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) return true
-            if (javaClass != other?.javaClass) return false
-            return data == (other as BinaryTree<*>.Node).data && frequency == other.frequency
-        }
-
-        override fun hashCode(): Int {
-            var result = data?.hashCode() ?: 0
-            result = 31 * result + frequency
-            return result
         }
     }
 }
