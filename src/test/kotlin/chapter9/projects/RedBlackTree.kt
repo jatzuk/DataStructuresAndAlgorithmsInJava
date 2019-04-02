@@ -20,27 +20,51 @@ class RedBlackTreeTest {
     private val rbt = RedBlackTree()
 
     @Test
-    fun recolorOnlyTest() {
+    fun recolorTest() {
         with(rbt) {
             insert(10)
             insert(5)
             insert(15)
             insert(20)
-//            displayTree()
-//            insert(0)
-//            insert(6)
-//            insert(14)
-            insert(25)
-//            insert(19)
-//            insert(30)
             displayTree()
         }
     }
 
-//    @Test
-//    fun rotationsOnlyTest() {
-//        with(rbt) {
-//
-//        }
-//    }
+    @Test
+    fun leftRotationsTest() { // ok
+        with(rbt) {
+            insert(10)
+            insert(5)
+            insert(15)
+            insert(20)
+            insert(25)
+            insert(30)
+            displayTree()
+            insert(35)
+            displayTree()
+        }
+    }
+
+    @Test
+    fun rightRotationsTest() {
+        with(rbt) {
+            insert(50)
+            insert(45)
+            insert(65)
+            insert(40)
+//            displayTree()
+            insert(35)
+//            displayTree()
+            insert(30)
+//            displayTree()
+            insert(15)
+            displayTree()
+            insert(10)
+            displayTree()
+//            insert(20)
+//            insert(15)
+//            displayTree()
+//            displayTree()
+        }
+    }
 }

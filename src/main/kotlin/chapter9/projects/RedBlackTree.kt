@@ -51,30 +51,20 @@ class RedBlackTree : BinaryTree<Int>() {
     }
 
     private fun adjustAfterInsertion(node: RBNode?) {
-        if (node != root) {
-            val parent = node!!.parent!!
-            if (parent.isRed()) {
-                val sibling = parent.getSibling()
-                if (sibling != null && sibling.isRed()) {
-                    parent.color = BLACK
-                    sibling.color = BLACK
-                    node.getGrandparent()?.color = RED
-                    adjustAfterInsertion(node.getGrandparent())
-                } else if (parent == parent.parent?.left) { // left
-
-                } else if (parent == parent.parent?.right) { // right
-//                with(parent) {
-//                    if (node == left) rotateLeft(this)
-//                    color = BLACK
-//                    parent.color = RED
-//                    rotateLeft(parent)
-//                }
-//                if (node == parent.left) rotateLeft(parent)
-//                parent.color = BLACK
-//                parent.parent!!.color = RED
-                    println("FFF ${parent.data}")
-                    rotateLeft(parent.parent!!)
-                }
+        if (node != root && node?.parent!!.isRed()) {
+            val parent = node.parent!!
+            val sibling = parent.getSibling()
+            if (sibling != null && sibling.isRed()) {
+                parent.color = BLACK
+                sibling.color = BLACK
+                node.getGrandparent()?.color = RED
+                adjustAfterInsertion(parent.parent)
+            } else if (parent == parent.parent?.left) { // left
+                if (node == parent.right) rotateRight(parent.parent)
+                rotateRight(parent.parent!!)
+            } else if (parent == parent.parent?.right) { // right
+                if (node == parent.left) rotateLeft(parent.parent)
+                rotateLeft(parent.parent!!)
             }
         }
 
@@ -82,19 +72,31 @@ class RedBlackTree : BinaryTree<Int>() {
     }
 
     private fun rotateLeft(node: RBNode?) {
-        println("node: ${node?.data}")
-
-        val subtree = node!!.right
-        (node.right as RBNode).color = BLACK
-        subtree!!.left = node
-        node.color = RED
-        node.left = null
-        node.right = null
-        node.parent!!.right = subtree
-
+        node?.let {
+            val subtree = (it.right as RBNode).apply {
+                color = BLACK
+                left = it
+            }
+            it.color = RED
+            it.parent = it.right as RBNode
+            it.left = null
+            it.right = null
+            it.parent!!.right = subtree
+        }
     }
 
-    private fun rotateRight(node: RBNode) {
+    private fun rotateRight(node: RBNode?) {
+        node?.let{
+            val subtree = (it.left as RBNode).apply {
+                color = BLACK
+                right = it
+            }
+            it.color = RED
+            it.parent = it.left as RBNode
+            it.left = null
+            it.right = null
+            it.parent!!.left = subtree
+        }
     }
 
     inner class RBNode(data: Int, var color: Color = RED) : Node(data) {
