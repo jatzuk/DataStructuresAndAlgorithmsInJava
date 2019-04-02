@@ -27,19 +27,20 @@ class RedBlackTreeTest {
             insert(15)
             insert(20)
 //            displayTree()
-            insert(0)
-            insert(6)
-            insert(14)
+//            insert(0)
+//            insert(6)
+//            insert(14)
             insert(25)
+//            insert(19)
 //            insert(30)
             displayTree()
         }
     }
 
-    @Test
-    fun rotationsOnlyTest() {
-        with(rbt) {
-
-        }
-    }
+//    @Test
+//    fun rotationsOnlyTest() {
+//        with(rbt) {
+//
+//        }
+//    }
 }

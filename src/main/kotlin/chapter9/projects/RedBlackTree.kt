@@ -60,10 +60,9 @@ class RedBlackTree : BinaryTree<Int>() {
                     sibling.color = BLACK
                     node.getGrandparent()?.color = RED
                     adjustAfterInsertion(node.getGrandparent())
-                }
-            } else if (parent == parent.parent?.left) { // left
+                } else if (parent == parent.parent?.left) { // left
 
-            } else if(parent == parent.parent?.right) { // right
+                } else if (parent == parent.parent?.right) { // right
 //                with(parent) {
 //                    if (node == left) rotateLeft(this)
 //                    color = BLACK
@@ -73,25 +72,26 @@ class RedBlackTree : BinaryTree<Int>() {
 //                if (node == parent.left) rotateLeft(parent)
 //                parent.color = BLACK
 //                parent.parent!!.color = RED
-                println("FFF ${parent.data}")
-                rotateLeft(parent)
+                    println("FFF ${parent.data}")
+                    rotateLeft(parent.parent!!)
+                }
             }
         }
 
         with(root as RBNode) { if (isRed()) color = BLACK }
     }
 
-    private fun rotateLeft(node: RBNode) {
-        println("node.right: ${node.right?.data}")
-        println("node: ${node.data}")
+    private fun rotateLeft(node: RBNode?) {
+        println("node: ${node?.data}")
 
-        val subtree = node.right
-        println("building subtree: ${subtree?.data}")
-        val sibling = node.right
-        println("saving sibling: ${sibling!!.data}")
-        subtree?.left = sibling
-        println("subtree left: ${subtree?.left}")
-        node.right = subtree
+        val subtree = node!!.right
+        (node.right as RBNode).color = BLACK
+        subtree!!.left = node
+        node.color = RED
+        node.left = null
+        node.right = null
+        node.parent!!.right = subtree
+
     }
 
     private fun rotateRight(node: RBNode) {
@@ -106,7 +106,10 @@ class RedBlackTree : BinaryTree<Int>() {
 
         fun getSibling(): RBNode? {
             return if (this == root /*|| this.parent == null*/) null
-            else parent?.left as RBNode? ?: parent?.right as RBNode?
+            else {
+                return if (this != parent?.left) parent?.left as RBNode?
+                else parent?.right as RBNode?
+            }
         }
 
         fun getGrandparent() = parent!!.parent

@@ -24,12 +24,10 @@ abstract class AbstractNode<T, N>(val data: T) : Comparable<AbstractNode<T, N>> 
 
     override fun compareTo(other: AbstractNode<T, N>) = data - other.data
 
-    override fun equals(other: Any?): Boolean {
-        return when {
-            this === other -> true
-            javaClass != other?.javaClass -> false
-            else -> data == (other as AbstractNode<*, *>).data
-        }
+    override fun equals(other: Any?) = when {
+        this === other -> true
+        javaClass != other?.javaClass -> false
+        else -> data == (other as AbstractNode<*, *>).data
     }
 
     override fun hashCode(): Int {
