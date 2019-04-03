@@ -31,7 +31,7 @@ class RedBlackTreeTest {
     }
 
     @Test
-    fun leftRotationsTest() { // ok
+    fun leftRotationsTest() {
         with(rbt) {
             insert(10)
             insert(5)
@@ -39,8 +39,9 @@ class RedBlackTreeTest {
             insert(20)
             insert(25)
             insert(30)
-            displayTree()
             insert(35)
+            insert(40)
+            insert(0)
             displayTree()
         }
     }

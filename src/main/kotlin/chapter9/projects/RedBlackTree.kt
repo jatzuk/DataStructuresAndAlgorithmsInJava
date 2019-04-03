@@ -72,31 +72,33 @@ class RedBlackTree : BinaryTree<Int>() {
     }
 
     private fun rotateLeft(node: RBNode?) {
-        node?.let {
-            val subtree = (it.right as RBNode).apply {
-                color = BLACK
-                left = it
+        if (node != root as RBNode) {
+            node?.let {
+                val subtree = (it.right as RBNode).apply {
+                    color = BLACK
+                    parent = it.parent
+                    left = it
+                    it.color = RED
+                    it.left = null // del ?
+                    it.right = null // del ?
+                }
+                it.parent!!.right = subtree
             }
-            it.color = RED
-            it.parent = it.right as RBNode
-            it.left = null
-            it.right = null
-            it.parent!!.right = subtree
+        } else {
+            val newRoot = node.right
+            val rootSibling = newRoot?.left
+            val subtree = (root as RBNode).apply {
+                color = RED
+                this.right = rootSibling
+                this.parent = newRoot as RBNode
+            }
+            root = newRoot!!
+            newRoot.left = subtree
         }
     }
 
     private fun rotateRight(node: RBNode?) {
-        node?.let{
-            val subtree = (it.left as RBNode).apply {
-                color = BLACK
-                right = it
-            }
-            it.color = RED
-            it.parent = it.left as RBNode
-            it.left = null
-            it.right = null
-            it.parent!!.left = subtree
-        }
+
     }
 
     inner class RBNode(data: Int, var color: Color = RED) : Node(data) {
