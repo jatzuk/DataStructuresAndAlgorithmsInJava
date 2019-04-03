@@ -40,6 +40,7 @@ class RedBlackTreeTest {
             insert(25)
             insert(30)
             insert(35)
+            displayTree()
             insert(40)
             insert(0)
             displayTree()
@@ -50,22 +51,41 @@ class RedBlackTreeTest {
     fun rightRotationsTest() {
         with(rbt) {
             insert(50)
-            insert(45)
-            insert(65)
             insert(40)
-//            displayTree()
+            insert(60)
             insert(35)
-//            displayTree()
+            insert(45)
             insert(30)
-//            displayTree()
-            insert(15)
+            insert(25)
+            insert(20)
             displayTree()
+        }
+    }
+
+    @Test
+    fun mergeTest() {
+        with(rbt) {
             insert(10)
+            insert(5)
+            insert(15)
+            insert(19)
+            insert(24)
+            insert(31)
+            insert(36)
+//            displayTree()
+            insert(41)
+            insert(0)
+
+            insert(50)
+            insert(40)
+            insert(60)
+            insert(35)
+            insert(45)
+            insert(30)
             displayTree()
+            insert(25)
 //            insert(20)
-//            insert(15)
-//            displayTree()
-//            displayTree()
+            displayTree()
         }
     }
 }
