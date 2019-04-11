@@ -65,8 +65,8 @@ class RedBlackTree : BinaryTree<Int>() {
                 } else rotateRight(parent.parent!!)
             } else if (parent == parent.parent?.right) { // right
                 if (node == parent.left) {
-                    rotateRight(parent)
-                    rotateLeft(parent.parent!!.parent!!)
+                    rotateRight(parent) // ok
+                    rotateLeft(parent.parent!!)
                 } else rotateLeft(parent.parent!!)
             }
         }
@@ -105,14 +105,13 @@ class RedBlackTree : BinaryTree<Int>() {
     private fun rotateRight(node: RBNode) {
         with(node) {
             if (this != root) {
-                val subtree = (node.left as RBNode).apply {
-                    color = BLACK
+                val subtree = (left as RBNode).apply {
                     parent = node.parent
                     right = node
                 }
                 color = RED
                 left = null
-                parent!!.left = subtree
+                parent!!.right = subtree
                 parent = subtree
             } else {
                 val newRoot = node.left as RBNode
