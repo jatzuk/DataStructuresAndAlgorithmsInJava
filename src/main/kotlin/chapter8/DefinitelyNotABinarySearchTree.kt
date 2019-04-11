@@ -19,7 +19,7 @@ abstract class DefinitelyNotABinarySearchTree<T> : BinaryTree<T>() {
         throw NotImplementedError("operation is not supported")
     }
 
-    override fun delete(key: T): Boolean {
+    override fun delete(key: T): Node? {
         throw NotImplementedError("operation is not supported")
     }
 

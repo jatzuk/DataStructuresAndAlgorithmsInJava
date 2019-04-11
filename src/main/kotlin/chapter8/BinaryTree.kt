@@ -54,8 +54,12 @@ open class BinaryTree<T> {
         }
     }
 
-    open fun delete(key: T): Boolean {
-        if (root == null) return false
+    fun clear() {
+        root = null
+    }
+
+    open fun delete(key: T): Node? {
+        if (root == null) return null
         var current = root
         var parent = current!!
         var isLeft = false
@@ -68,9 +72,9 @@ open class BinaryTree<T> {
                 current = current.right
                 isLeft = false
             }
-            if (current == null) return false
+            if (current == null) return null
         }
-
+        val elemToDelete = current
         if (current.left == null && current.right == null) {
             when {
                 current == root -> root = null
@@ -97,7 +101,7 @@ open class BinaryTree<T> {
                 else -> parent.right = successor
             }
         }
-        return true
+        return elemToDelete
     }
 
     private fun getSuccessor(delNode: Node): Node {

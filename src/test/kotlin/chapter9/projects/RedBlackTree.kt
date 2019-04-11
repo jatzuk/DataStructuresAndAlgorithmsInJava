@@ -87,4 +87,18 @@ class RedBlackTreeTest {
             displayTree()
         }
     }
+
+    @Test
+    fun simpleDeletionTest() {
+        with(rbt) {
+            insert(10)
+            insert(15)
+            insert(5)
+            insert(20)
+            displayTree()
+
+            delete(15)
+            displayTree()
+        }
+    }
 }

@@ -19,6 +19,7 @@ import chapter9.projects.RedBlackTree.Color.RED
  */
 
 class RedBlackTree : BinaryTree<Int>() {
+    @Throws(IllegalArgumentException::class)
     override fun insert(value: Int) {
         val node = RBNode(value)
         if (root == null) {
@@ -36,14 +37,14 @@ class RedBlackTree : BinaryTree<Int>() {
                         node.parent = parent
                         break
                     }
-                } else {
+                } else if (value > current.data) {
                     current = current.right as RBNode?
                     if (current == null) {
                         parent.right = node
                         node.parent = parent
                         break
                     }
-                }
+                } else throw IllegalArgumentException("element with $value is already exists")
             }
             adjustTree(node)
         }
@@ -76,6 +77,26 @@ class RedBlackTree : BinaryTree<Int>() {
         }
 
         with(root as RBNode) { if (isRed()) color = BLACK }
+    }
+
+    override fun delete(key: Int): Node? {
+        val elem = super.delete(key) as RBNode?
+        elem?.let { adjustAfterDeletion(it) }
+        with(root as RBNode) {
+            if (left == null && right != null) (right as RBNode).color = RED
+            if (right == null && left != null) (right as RBNode).color = RED
+        }
+        return elem
+    }
+
+    private fun adjustAfterDeletion(elem: RBNode) {
+        with(elem) {
+            if (left == null) {
+                (right as RBNode).color = BLACK
+                (right as RBNode).parent = parent as RBNode
+                parent = null
+            }
+        }
     }
 
     private fun rotateLeft(node: RBNode) {

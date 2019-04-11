@@ -91,7 +91,7 @@ class HuffmanEncoder(source: String) : BinaryTree<Char>() {
         throw NotImplementedError("operation is not supported")
     }
 
-    override fun delete(key: Char): Boolean {
+    override fun delete(key: Char): Node? {
         throw NotImplementedError("operation is not supported")
     }
 
