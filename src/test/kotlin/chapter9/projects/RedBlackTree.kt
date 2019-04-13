@@ -89,15 +89,44 @@ class RedBlackTreeTest {
     }
 
     @Test
-    fun simpleDeletionTest() {
+    fun noChildrenCaseDeletion() {
         with(rbt) {
             insert(10)
-            insert(15)
             insert(5)
-            insert(20)
+            insert(15)
             displayTree()
-
             delete(15)
+            displayTree()
+        }
+    }
+
+    @Test
+    fun oneChildrenCaseDeletion() {
+        with(rbt) {
+            insert(10)
+            insert(5)
+            insert(15)
+//            insert(20)
+            insert(0)
+            displayTree()
+//            delete(15)
+            delete(5)
+            displayTree()
+            insert(1)
+            displayTree()
+        }
+    }
+
+    @Test
+    fun twoChildrenCaseDeletion() {
+        with(rbt) {
+            insert(10)
+            insert(5)
+            insert(15)
+            insert(20)
+            insert(25)
+            displayTree()
+            delete(20)
             displayTree()
         }
     }

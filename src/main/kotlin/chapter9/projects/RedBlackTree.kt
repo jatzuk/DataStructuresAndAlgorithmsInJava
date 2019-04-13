@@ -82,20 +82,42 @@ class RedBlackTree : BinaryTree<Int>() {
     override fun delete(key: Int): Node? {
         val elem = super.delete(key) as RBNode?
         elem?.let { adjustAfterDeletion(it) }
-        with(root as RBNode) {
-            if (left == null && right != null) (right as RBNode).color = RED
-            if (right == null && left != null) (right as RBNode).color = RED
-        }
+//        with(root as RBNode) {
+//            if (left == null && right != null) (right as RBNode).color = RED
+//            if (right == null && left != null) (right as RBNode).color = RED
+//        }
         return elem
     }
 
+//    override fun getSuccessor(delNode: Node): Node {
+//
+//    }
+
     private fun adjustAfterDeletion(elem: RBNode) {
-        with(elem) {
-            if (left == null) {
-                (right as RBNode).color = BLACK
-                (right as RBNode).parent = parent as RBNode
-                parent = null
+        when {
+            elem.left == null && elem.right == null -> Unit
+            elem.left != null || elem.right != null -> { // 1 child
+                with((elem.left ?: elem.right) as RBNode) {
+                    parent = elem.parent
+                    color = BLACK
+                }
             }
+            else -> { // 2 children
+
+            }
+        }
+
+//        with(elem) {
+//            if (left == null) bindNode(this.right as RBNode, parent!!)
+//            else if (right == null) bindNode(this.left as RBNode, parent!!)
+//        }
+    }
+
+    private fun bindNode(node: RBNode, p: RBNode) {
+        with(node) {
+            color = BLACK
+            parent = p
+            parent!!.parent = null
         }
     }
 
