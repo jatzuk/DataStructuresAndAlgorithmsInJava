@@ -105,19 +105,18 @@ open class BinaryTree<T> {
         return deleted
     }
 
-    protected open fun getSuccessor(delNode: Node): Node {
+    private fun getSuccessor(delNode: Node): Node {
         var parent = delNode
         var successor = delNode
-        var current = delNode.right
+        var current = delNode.left
         while (current != null) {
             parent = successor
             successor = current
-            current = current.left
+            current = current.right
         }
-        if (successor != delNode.right) {
-            parent.left = successor.right
-            successor.right = delNode.right
-        }
+        successor.right = delNode.right
+        parent.right = successor.left
+        if (successor != delNode.left) successor.left = delNode.left
         return successor
     }
 
@@ -207,8 +206,8 @@ open class BinaryTree<T> {
         override var right: Node? = null
 
         override fun display() {
-//            print("$data")
-            print("($frequency)$data")
+            print("$data")
+//            print("($frequency)$data")
         }
     }
 }

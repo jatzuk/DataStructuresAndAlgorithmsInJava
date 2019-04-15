@@ -59,4 +59,54 @@ class BinaryTreeTest {
             displayTree()
         }
     }
+
+    @Test
+    fun removalTest() {
+        with(BinaryTree<Int>()) {
+            insert(10)
+            insert(5)
+            insert(15)
+            insert(20)
+            insert(19)
+            insert(21)
+            displayTree()
+            delete(20)
+            displayTree()
+            insert(18)
+            insert(17)
+            insert(14)
+            insert(11)
+            insert(13)
+            displayTree()
+            delete(15)
+            displayTree()
+
+//            insert(20)
+//            insert(15)
+//            insert(25)
+//            insert(11)
+//            insert(12)
+//            insert(14)
+//            displayTree()
+//            delete(20)
+//            displayTree()
+        }
+    }
+
+    @Test
+    fun rootDeletionTest() {
+        with(BinaryTree<Int>()) {
+            insert(10)
+            insert(5)
+            insert(15)
+            insert(12)
+            insert(19)
+            insert(11)
+            insert(13)
+            insert(21)
+            displayTree()
+            delete(10)
+            displayTree()
+        }
+    }
 }

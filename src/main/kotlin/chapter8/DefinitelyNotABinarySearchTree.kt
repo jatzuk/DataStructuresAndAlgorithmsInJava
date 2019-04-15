@@ -15,7 +15,7 @@ package chapter8
  */
 
 abstract class DefinitelyNotABinarySearchTree<T> : BinaryTree<T>() {
-    override fun find(key: T): BinaryTree<T>.Node? {
+    override fun find(key: T): Node? {
         throw NotImplementedError("operation is not supported")
     }
 
