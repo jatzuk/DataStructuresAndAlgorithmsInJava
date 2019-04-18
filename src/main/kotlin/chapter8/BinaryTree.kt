@@ -1,6 +1,7 @@
 package chapter8
 
 import chapter9.AbstractNode
+import chapter9.projects.RedBlackTree
 import java.util.*
 
 /*
@@ -99,6 +100,8 @@ open class BinaryTree<T> {
                 isLeft -> parent.left = successor
                 else -> parent.right = successor
             }
+            // for RBT only
+            (successor as RedBlackTree.RBNode).parent = parent as RedBlackTree.RBNode
         }
         return current
     }
@@ -112,10 +115,14 @@ open class BinaryTree<T> {
             successor = current
             current = current.right
         }
-        successor.right = delNode.right
-        parent.right = successor.left
-        if (successor != delNode.left) successor.left = delNode.left
-        return successor
+        return with(successor) {
+            right = delNode.right
+            parent.right = left
+            if (this != delNode.left) left = delNode.left
+            (right as RedBlackTree.RBNode?)?.parent = this as RedBlackTree.RBNode?
+            (left as RedBlackTree.RBNode?)?.parent = this
+            this
+        }
     }
 
     fun traverse(traverseType: Int) {

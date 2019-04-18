@@ -94,9 +94,21 @@ class RedBlackTreeTest {
             insert(10)
             insert(5)
             insert(15)
+            insert(14)
+            insert(20)
             displayTree()
-            delete(15)
+            delete(14)
             displayTree()
+
+//            insert(10)
+//            insert(5)
+//            insert(15)
+//            insert(14)
+//            insert(20)
+//            insert(25)
+//            displayTree()
+//            delete(5)
+//            displayTree()
         }
     }
 
@@ -106,27 +118,20 @@ class RedBlackTreeTest {
             insert(10)
             insert(5)
             insert(15)
-//            insert(20)
-            insert(0)
-            displayTree()
-//            delete(15)
-            delete(5)
-            displayTree()
-            insert(1)
-            displayTree()
-        }
-    }
-
-    @Test
-    fun twoChildrenCaseDeletion() {
-        with(rbt) {
-            insert(10)
-            insert(5)
-            insert(15)
+            insert(13)
             insert(20)
             insert(25)
             displayTree()
+            delete(5)
+            displayTree()
+            insert(14)
+            insert(18)
+            insert(19)
+            insert(30)
+            displayTree()
             delete(20)
+            displayTree()
+            delete(19)
             displayTree()
         }
     }

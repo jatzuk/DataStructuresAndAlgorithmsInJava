@@ -81,43 +81,44 @@ class RedBlackTree : BinaryTree<Int>() {
 
     override fun delete(key: Int): Node? {
         val elem = super.delete(key) as RBNode?
-        elem?.let { adjustAfterDeletion(it) }
-//        with(root as RBNode) {
-//            if (left == null && right != null) (right as RBNode).color = RED
-//            if (right == null && left != null) (right as RBNode).color = RED
-//        }
+        elem?.let {
+            adjustAfterDeletion(it)
+        }
         return elem
     }
 
-//    override fun getSuccessor(delNode: Node): Node {
-//
-//    }
-
     private fun adjustAfterDeletion(elem: RBNode) {
-        when {
-            elem.left == null && elem.right == null -> Unit
-            elem.left != null || elem.right != null -> { // 1 child
-                with((elem.left ?: elem.right) as RBNode) {
-                    parent = elem.parent
-                    color = BLACK
+        var node = elem
+        with(node) {
+            while (!isRed() && node != root) {
+                val isLeft = node < parent!!
+                val sibling = (if (isLeft) parent?.right else parent?.left) as RBNode? ?: return
+                if (sibling.isRed()) {
+                    sibling.color = BLACK
+                    parent?.color = RED
+                    rotateLeft(parent!!)
+                } else {
+                    val leftSibling = sibling.left as RBNode?
+                    val rightSibling = sibling.right as RBNode?
+                    when {
+                        leftSibling?.color == BLACK && rightSibling?.color == BLACK -> {
+                            sibling.color = RED
+                            node = sibling.parent!!
+                        }
+                        sibling.color == BLACK &&
+                                (leftSibling?.color == BLACK || rightSibling?.color == BLACK) -> {
+                            sibling.color = RED
+                            rotateLeft(sibling)
+                        }
+                        else -> {
+                            sibling.color = parent!!.color
+                            parent!!.color = BLACK
+                            parent?.left?.let { rotateRight(parent!!) }
+                            return
+                        }
+                    }
                 }
             }
-            else -> { // 2 children
-
-            }
-        }
-
-//        with(elem) {
-//            if (left == null) bindNode(this.right as RBNode, parent!!)
-//            else if (right == null) bindNode(this.left as RBNode, parent!!)
-//        }
-    }
-
-    private fun bindNode(node: RBNode, p: RBNode) {
-        with(node) {
-            color = BLACK
-            parent = p
-            parent!!.parent = null
         }
     }
 
