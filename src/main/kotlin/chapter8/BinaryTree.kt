@@ -84,14 +84,26 @@ open class BinaryTree<T> {
         } else if (current.right == null) {
             when {
                 current == root -> root = current.left
-                isLeft -> parent.left = current.left
-                else -> parent.right = current.left
+                isLeft -> {
+                    parent.left = current.left
+                    (current.left as RedBlackTree.RBNode).parent = parent as RedBlackTree.RBNode
+                }
+                else -> {
+                    parent.right = current.left
+                    (current.right as RedBlackTree.RBNode).parent = parent as RedBlackTree.RBNode
+                }
             }
         } else if (current.left == null) {
             when {
                 current == root -> root = current.right
-                isLeft -> parent.left = current.right
-                else -> parent.right = current.right
+                isLeft -> {
+                    parent.left = current.right
+                    (current.right as RedBlackTree.RBNode).parent = parent as RedBlackTree.RBNode
+                }
+                else -> {
+                    parent.right = current.right
+                    (current.left as RedBlackTree.RBNode).parent = parent as RedBlackTree.RBNode
+                }
             }
         } else {
             val successor = getSuccessor(current)

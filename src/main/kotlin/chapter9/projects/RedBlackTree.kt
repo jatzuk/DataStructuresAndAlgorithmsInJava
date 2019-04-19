@@ -81,42 +81,61 @@ class RedBlackTree : BinaryTree<Int>() {
 
     override fun delete(key: Int): Node? {
         val elem = super.delete(key) as RBNode?
-        elem?.let {
-            adjustAfterDeletion(it)
-        }
+        elem?.let { adjustAfterDeletion(it) }
         return elem
     }
 
     private fun adjustAfterDeletion(elem: RBNode) {
         var node = elem
-        with(node) {
-            while (!isRed() && node != root) {
-                val isLeft = node < parent!!
-                val sibling = (if (isLeft) parent?.right else parent?.left) as RBNode? ?: return
+        while (!node.isRed() && node != root) {
+            val isLeft = node < node.parent!!
+            if (isLeft) {
+                var sibling = node.parent?.right as RBNode
                 if (sibling.isRed()) {
                     sibling.color = BLACK
-                    parent?.color = RED
-                    rotateLeft(parent!!)
+                    node.parent?.color = RED
+                    rotateLeft(node.parent!!)
+                    sibling = node.parent?.right as RBNode
+                }
+                if ((sibling.left as RBNode?)?.color == BLACK && (sibling.right as RBNode?)?.color == BLACK) {
+                    sibling.color = RED
+                    node = node.parent!!
                 } else {
-                    val leftSibling = sibling.left as RBNode?
-                    val rightSibling = sibling.right as RBNode?
-                    when {
-                        leftSibling?.color == BLACK && rightSibling?.color == BLACK -> {
-                            sibling.color = RED
-                            node = sibling.parent!!
-                        }
-                        sibling.color == BLACK &&
-                                (leftSibling?.color == BLACK || rightSibling?.color == BLACK) -> {
-                            sibling.color = RED
-                            rotateLeft(sibling)
-                        }
-                        else -> {
-                            sibling.color = parent!!.color
-                            parent!!.color = BLACK
-                            parent?.left?.let { rotateRight(parent!!) }
-                            return
-                        }
+                    if ((sibling.right as RBNode?)?.color == BLACK) {
+                        (sibling.left as RBNode?)?.color = BLACK
+                        sibling.color = RED
+                        rotateRight(sibling)
+                        sibling = node.parent?.right as RBNode
                     }
+                    sibling.color = node.parent?.color!!
+                    node.parent?.color = BLACK
+                    (sibling.right as RBNode?)?.color = BLACK
+                    rotateLeft(node.parent!!)
+                    node = root as RBNode
+                }
+            } else {
+                var sibling = node.parent?.left as RBNode
+                if (sibling.isRed()) {
+                    sibling.color = BLACK
+                    node.parent?.color = RED
+                    rotateRight(node.parent!!)
+                    sibling = node.parent?.left as RBNode
+                }
+                if ((sibling.left as RBNode?)?.color == BLACK && (sibling.right as RBNode?)?.color == BLACK) {
+                    sibling.color = RED
+                    node = node.parent!!
+                } else {
+                    if ((sibling.left as RBNode?)?.color == BLACK) {
+                        (sibling.right as RBNode?)?.color = BLACK
+                        sibling.color = RED
+                        rotateLeft(sibling)
+                        sibling = node.parent?.left as RBNode
+                    }
+                    sibling.color = node.parent?.color!!
+                    node.parent?.color = BLACK
+                    (sibling.left as RBNode?)?.color = BLACK
+                    rotateRight(node.parent!!)
+                    node = root as RBNode
                 }
             }
         }
@@ -125,27 +144,28 @@ class RedBlackTree : BinaryTree<Int>() {
     private fun rotateLeft(node: RBNode) {
         with(node) {
             if (node != root) {
-                val subtree = (right as RBNode).apply {
-                    color = BLACK
-                    parent = node.parent
-                    left = node
-                }
-                color = RED
-                right = null
-                linkToParent(node, subtree)
-                parent = subtree
+//                val subtree = (right as RBNode).apply {
+//                    color = BLACK
+//                    parent = node.parent
+//                    left = node
+//                }
+//                color = RED
+//                right = null
+//                linkToParent(node, subtree)
+//                parent = subtree
+
             } else {
                 val newRoot = right as RBNode
                 newRoot.parent = null
                 val sibling = newRoot.left as RBNode
-                val subtree = (root as RBNode).apply {
+                val subNode = (root as RBNode).apply {
                     color = RED
                     right = sibling
                     parent = newRoot
                 }
-                sibling.parent = subtree
+                sibling.parent = subNode
                 root = newRoot
-                newRoot.left = subtree
+                newRoot.left = subNode
             }
         }
     }
@@ -153,26 +173,22 @@ class RedBlackTree : BinaryTree<Int>() {
     private fun rotateRight(node: RBNode) {
         with(node) {
             if (this != root) {
-                val subtree = (left as RBNode).apply {
-                    parent = node.parent
-                    right = node
-                }
-                color = RED
-                left = null
-                linkToParent(node, subtree)
-                parent = subtree
+                right = RBNode(parent!!.data).apply { parent = node }
+                color = BLACK
+                parent = parent?.parent
+                parent?.left = node
             } else {
                 val newRoot = node.left as RBNode
                 newRoot.parent = null
                 val sibling = newRoot.right as RBNode
-                val subtree = (root as RBNode).apply {
+                val subNode = (root as RBNode).apply {
                     color = RED
                     left = sibling
                     parent = newRoot
                 }
-                sibling.parent = subtree
+                sibling.parent = subNode
                 root = newRoot
-                newRoot.right = subtree
+                newRoot.right = subNode
             }
         }
     }
