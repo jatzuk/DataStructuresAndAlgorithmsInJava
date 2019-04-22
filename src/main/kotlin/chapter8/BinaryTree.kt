@@ -1,7 +1,9 @@
 package chapter8
 
 import chapter9.AbstractNode
-import chapter9.projects.RedBlackTree
+import chapter9.projects.RedBlackTree.Color.BLACK
+import chapter9.projects.RedBlackTree.Color.RED
+import chapter9.projects.RedBlackTree.RBNode
 import java.util.*
 
 /*
@@ -86,34 +88,40 @@ open class BinaryTree<T> {
                 current == root -> root = current.left
                 isLeft -> {
                     parent.left = current.left
-                    (current.left as RedBlackTree.RBNode).parent = parent as RedBlackTree.RBNode
+                    // RBT fix
+                    (current.left as RBNode).color = BLACK
+                    (current.left as RBNode).parent = (current as RBNode).parent
+                    (current as RBNode).color = RED
                 }
-                else -> {
-                    parent.right = current.left
-                    (current.right as RedBlackTree.RBNode).parent = parent as RedBlackTree.RBNode
-                }
+                else -> parent.right = current.left
             }
         } else if (current.left == null) {
             when {
                 current == root -> root = current.right
-                isLeft -> {
-                    parent.left = current.right
-                    (current.right as RedBlackTree.RBNode).parent = parent as RedBlackTree.RBNode
-                }
+                isLeft -> parent.left = current.right
                 else -> {
+                    // RBT fix
                     parent.right = current.right
-                    (current.left as RedBlackTree.RBNode).parent = parent as RedBlackTree.RBNode
+                    (current.right as RBNode).color = BLACK
+                    (current.right as RBNode).parent = (current as RBNode).parent
+                    (current as RBNode).color = RED
                 }
             }
         } else {
             val successor = getSuccessor(current)
             when {
                 current == root -> root = successor
-                isLeft -> parent.left = successor
-                else -> parent.right = successor
+                isLeft -> {
+                    parent.left = successor
+
+                }
+                else -> {
+                    parent.right = successor
+
+                }
             }
-            // for RBT only
-            (successor as RedBlackTree.RBNode).parent = parent as RedBlackTree.RBNode
+            // RBT fix
+//            (successor as RBNode).parent = parent as RBNode
         }
         return current
     }
@@ -127,12 +135,13 @@ open class BinaryTree<T> {
             successor = current
             current = current.right
         }
-        return with(successor) {
+        (successor as RBNode).color = BLACK
+//        (successor.right as RBNode).parent = successor
+        return with(successor as Node) {
             right = delNode.right
+            (right as RBNode).parent = successor
             parent.right = left
             if (this != delNode.left) left = delNode.left
-            (right as RedBlackTree.RBNode?)?.parent = this as RedBlackTree.RBNode?
-            (left as RedBlackTree.RBNode?)?.parent = this
             this
         }
     }

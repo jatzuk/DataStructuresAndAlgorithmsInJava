@@ -89,31 +89,24 @@ class RedBlackTreeTest {
     }
 
     @Test
-    fun noChildrenCaseDeletion() {
+    fun twoCaseRightRotationsTest() {
         with(rbt) {
-            insert(10)
-            insert(5)
-            insert(15)
-            insert(14)
-            insert(20)
+            insert(50)
+            insert(60)
+            insert(45)
+            insert(46)
+            insert(44)
+            insert(43)
             displayTree()
-            delete(14)
+            delete(60) // rotate root
             displayTree()
-
-//            insert(10)
-//            insert(5)
-//            insert(15)
-//            insert(14)
-//            insert(20)
-//            insert(25)
-//            displayTree()
-//            delete(5)
-//            displayTree()
+            insert(42) // fix up
+            displayTree()
         }
     }
 
     @Test
-    fun oneChildrenCaseDeletion() {
+    fun twoCaseLeftRotationsTest() {
         with(rbt) {
             insert(10)
             insert(5)
@@ -122,25 +115,46 @@ class RedBlackTreeTest {
             insert(20)
             insert(25)
             displayTree()
-            delete(5)
+            delete(5) // rotate root
             displayTree()
-//            insert(14)
-//            insert(18)
-//            insert(19)
-//            insert(30)
+            insert(26) // fix up
+            displayTree()
+        }
+    }
+
+    @Test
+    fun chaosCasesTest() {
+        with(rbt) {
+            insert(10)
+            insert(5)
+            insert(15)
+            insert(13)
+            insert(20)
+            insert(25)
 //            displayTree()
-//            delete(20)
+            delete(5)
 //            displayTree()
-//            delete(19)
+            insert(26)
 //            displayTree()
-//            insert(4)
+            insert(14)
+            insert(18)
+            insert(19)
+            insert(30)
 //            displayTree()
-//            insert(3)
-//            insert(2)
-//            insert(1)
+            delete(20)
 //            displayTree()
-//            delete(2)
+            delete(19)
 //            displayTree()
+            insert(4)
+//            displayTree()
+            insert(3)
+            insert(2)
+            insert(1)
+            insert(9)
+            insert(11)
+            displayTree()
+            delete(10)
+            displayTree()
         }
     }
 }
