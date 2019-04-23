@@ -100,8 +100,8 @@ open class BinaryTree<T> {
                 current == root -> root = current.right
                 isLeft -> parent.left = current.right
                 else -> {
-                    // RBT fix
                     parent.right = current.right
+                    // RBT fix
                     (current.right as RBNode).color = BLACK
                     (current.right as RBNode).parent = (current as RBNode).parent
                     (current as RBNode).color = RED
@@ -111,17 +111,11 @@ open class BinaryTree<T> {
             val successor = getSuccessor(current)
             when {
                 current == root -> root = successor
-                isLeft -> {
-                    parent.left = successor
-
-                }
-                else -> {
-                    parent.right = successor
-
-                }
+                isLeft -> parent.left = successor
+                else -> parent.right = successor
             }
             // RBT fix
-//            (successor as RBNode).parent = parent as RBNode
+            (successor as RBNode).parent = parent as RBNode
         }
         return current
     }
@@ -136,7 +130,6 @@ open class BinaryTree<T> {
             current = current.right
         }
         (successor as RBNode).color = BLACK
-//        (successor.right as RBNode).parent = successor
         return with(successor as Node) {
             right = delNode.right
             (right as RBNode).parent = successor

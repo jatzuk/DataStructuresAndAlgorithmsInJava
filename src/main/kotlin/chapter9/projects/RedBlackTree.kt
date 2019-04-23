@@ -54,6 +54,7 @@ class RedBlackTree : BinaryTree<Int>() {
         if (node != root && node?.parent!!.color == RED) {
             val parent = node.parent!!
             val sibling = parent.getSibling()
+            parent.color = BLACK
             when {
                 sibling != null && sibling.color == RED -> {
                     parent.color = BLACK
@@ -66,16 +67,19 @@ class RedBlackTree : BinaryTree<Int>() {
                         rotateLeft(parent)
                         rotateRight(parent.parent!!.parent!!)
                     } else rotateRight(parent.parent!!)
+                    (parent.right as RBNode?)?.color = RED
                 }
-                parent == parent.parent?.right -> {
+                else /*parent == parent.parent?.right*/ -> {
                     if (node == parent.left) {
                         rotateRight(parent)
                         rotateLeft(parent.parent!!.parent!!)
                     } else rotateLeft(parent.parent!!)
+                    (parent.left as RBNode?)?.color = RED
                 }
-            }
-        }
 
+            }
+
+        }
         with(root as RBNode) { if (color == RED) color = BLACK }
     }
 
@@ -92,9 +96,10 @@ class RedBlackTree : BinaryTree<Int>() {
                 var sibling = node.parent?.right as RBNode
                 if (sibling.color == RED) {
                     sibling.color = BLACK
-                    node.parent?.color = RED
+                    node.parent?.color = BLACK // RED
                     rotateLeft(node.parent!!)
                     sibling = node.parent?.right as RBNode
+                    sibling.color = RED // TODO("fix")
                 }
                 if ((sibling.left as RBNode?)?.color == BLACK && (sibling.right as RBNode?)?.color == BLACK) {
                     sibling.color = RED
@@ -117,10 +122,12 @@ class RedBlackTree : BinaryTree<Int>() {
                 var sibling = node.parent?.left as RBNode
                 if (sibling.color == RED) {
                     sibling.color = BLACK
-                    node.parent?.color = RED
+                    node.parent?.color = BLACK //RED TODO("FIX")
                     rotateRight(node.parent!!)
                     sibling = node.parent?.left as RBNode
+                    sibling.color = RED // TODO("fix")
                 }
+                if (sibling.left == null) return
                 if ((sibling.left as RBNode?)?.color == BLACK && (sibling.right as RBNode?)?.color == BLACK) {
                     sibling.color = RED
                     node = node.parent!!
@@ -131,7 +138,7 @@ class RedBlackTree : BinaryTree<Int>() {
                     rotateLeft(sibling)
                     sibling = node.parent?.left as RBNode
                 }
-                if ((sibling.left as RBNode?)?.isRed() ?: return) {
+                if ((sibling.left as RBNode?)?.isRed() ?: return) { // TODO("2")
                     sibling.color = node.parent?.color!!
                     node.parent?.color = BLACK
                     (sibling.left as RBNode?)?.color = BLACK
@@ -153,15 +160,11 @@ class RedBlackTree : BinaryTree<Int>() {
             node.apply {
                 right = node.right?.left
                 parent?.left = node
-                color = RED
-                parent?.color = BLACK
             }
         } else {
             val right = root?.right as RBNode
             root?.right = right.left
             (root?.right as RBNode).parent = root as RBNode
-            (root?.right as RBNode).color = RED
-            (root as RBNode).color = BLACK
             right.parent = root as RBNode
             right.left = root
             (root as RBNode).parent = right
@@ -180,16 +183,14 @@ class RedBlackTree : BinaryTree<Int>() {
             node.apply {
                 left = node.left?.right
                 parent?.right = node
-                parent?.color = BLACK
-                color = RED
             }
         } else {
             val left = root?.left as RBNode
-            root?.left = root?.left?.right
+            root?.left = left.right
             (root as RBNode).parent = left
-            (root as RBNode).color = BLACK
+//            (root as RBNode).color = BLACK
             (left.right as RBNode).parent = root as RBNode
-            (left.right as RBNode).color = RED
+//            (left.right as RBNode).color = RED
             left.right = root
             left.parent = null
             root = left
