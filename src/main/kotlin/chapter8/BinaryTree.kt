@@ -102,7 +102,7 @@ open class BinaryTree<T> {
                 else -> parent.right = successor
             }
             // RBT fix
-            (successor as RBNode).parent = parent as RBNode
+            (successor as? RBNode)?.parent = parent as? RBNode
         }
         return current
     }
@@ -116,10 +116,10 @@ open class BinaryTree<T> {
             successor = current
             current = current.right
         }
-        (successor as RBNode).color = BLACK
-        return with(successor as Node) {
+        (successor as? RBNode)?.color = BLACK
+        return with(successor) {
             right = delNode.right
-            (right as RBNode).parent = successor
+            (right as? RBNode)?.parent = successor as? RBNode?
             parent.right = left
             if (this != delNode.left) left = delNode.left
             this
