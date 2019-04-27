@@ -119,7 +119,7 @@ open class BinaryTree<T> {
         (successor as? RBNode)?.color = BLACK
         return with(successor) {
             right = delNode.right
-            (right as? RBNode)?.parent = successor as? RBNode?
+            (right as? RBNode)?.parent = successor as? RBNode
             parent.right = left
             if (this != delNode.left) left = delNode.left
             this
