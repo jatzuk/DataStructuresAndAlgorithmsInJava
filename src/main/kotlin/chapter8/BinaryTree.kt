@@ -59,7 +59,7 @@ open class BinaryTree<T> {
     fun clear() {
         root = null
     }
-//
+
     open fun delete(key: T): Node? {
         if (root == null) return null
         var current = root

@@ -17,7 +17,7 @@ import chapter9.projects.RedBlackTree.Color.RED
  *                                          *_________*
  *                                           ***___***
  */
-//
+
 class RedBlackTree : BinaryTree<Int>() {
     @Throws(IllegalArgumentException::class)
     override fun insert(value: Int) {
