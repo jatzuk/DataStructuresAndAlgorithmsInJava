@@ -56,8 +56,10 @@ class RedBlackTreeTest {
             insert(60)
             insert(35)
             insert(45)
+            displayTree()
             insert(30)
             insert(25)
+            displayTree()
             insert(20)
             displayTree()
         }
@@ -90,7 +92,7 @@ class RedBlackTreeTest {
     }
 
     @Test
-    fun twoCaseRightRotationsTest() { // ok
+    fun twoCaseRightRotationsTest() {
         with(rbt) {
             insert(50)
             insert(60)
@@ -107,7 +109,7 @@ class RedBlackTreeTest {
     }
 
     @Test
-    fun twoCaseLeftRotationsTest() { // ok
+    fun twoCaseLeftRotationsTest() {
         with(rbt) {
             insert(10)
             insert(5)
@@ -139,7 +141,7 @@ class RedBlackTreeTest {
 //            displayTree()
             insert(14)
             insert(18)
-            insert(19) // TypeCastException //TODO("fix")
+            insert(19)
             insert(30)
 //            displayTree()
             delete(20)
@@ -154,7 +156,7 @@ class RedBlackTreeTest {
             insert(9)
             insert(11)
             displayTree()
-            delete(10) // just replace with successor // TODO("2")
+            delete(10)
             displayTree()
         }
     }

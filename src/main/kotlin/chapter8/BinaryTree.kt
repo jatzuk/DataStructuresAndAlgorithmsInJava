@@ -2,7 +2,6 @@ package chapter8
 
 import chapter9.AbstractNode
 import chapter9.projects.RedBlackTree.Color.BLACK
-import chapter9.projects.RedBlackTree.Color.RED
 import chapter9.projects.RedBlackTree.RBNode
 import java.util.*
 
@@ -86,26 +85,14 @@ open class BinaryTree<T> {
         } else if (current.right == null) {
             when {
                 current == root -> root = current.left
-                isLeft -> {
-                    parent.left = current.left
-                    // RBT fix
-                    (current.left as RBNode).color = BLACK
-                    (current.left as RBNode).parent = (current as RBNode).parent
-                    (current as RBNode).color = RED
-                }
+                isLeft -> parent.left = current.left
                 else -> parent.right = current.left
             }
         } else if (current.left == null) {
             when {
                 current == root -> root = current.right
                 isLeft -> parent.left = current.right
-                else -> {
-                    parent.right = current.right
-                    // RBT fix
-                    (current.right as RBNode).color = BLACK
-                    (current.right as RBNode).parent = (current as RBNode).parent
-                    (current as RBNode).color = RED
-                }
+                else -> parent.right = current.right
             }
         } else {
             val successor = getSuccessor(current)

@@ -46,11 +46,11 @@ class RedBlackTree : BinaryTree<Int>() {
                     }
                 } else throw IllegalArgumentException("element with $value is already exists")
             }
-            adjustTree(node)
+            insertAdjusting(node)
         }
     }
 
-    private fun adjustTree(node: RBNode?) {
+    private fun insertAdjusting(node: RBNode?) {
         if (node != root && node?.parent!!.color == RED) {
             val parent = node.parent!!
             val sibling = parent.getSibling()
@@ -60,7 +60,7 @@ class RedBlackTree : BinaryTree<Int>() {
                     parent.color = BLACK
                     sibling.color = BLACK
                     node.parent!!.parent?.color = RED
-                    adjustTree(parent.parent)
+                    insertAdjusting(parent.parent)
                 }
                 parent == parent.parent?.left -> {
                     if (node == parent.right) {
@@ -69,7 +69,7 @@ class RedBlackTree : BinaryTree<Int>() {
                     } else rotateRight(parent.parent!!)
                     (parent.right as RBNode?)?.color = RED
                 }
-                else /*parent == parent.parent?.right*/ -> {
+                else -> {
                     if (node == parent.left) {
                         rotateRight(parent)
                         rotateLeft(parent.parent!!.parent!!)
@@ -78,131 +78,115 @@ class RedBlackTree : BinaryTree<Int>() {
                 }
 
             }
-
         }
         with(root as RBNode) { if (color == RED) color = BLACK }
     }
 
     override fun delete(key: Int): Node? {
         val elem = super.delete(key) as RBNode?
-        elem?.let { adjustAfterDeletion(it) }
+        elem?.let { deletionAdjusting(it) }
         return elem
     }
 
-    private fun adjustAfterDeletion(elem: RBNode) {
-        var node = elem
-        while (node.color == BLACK && node != root) {
-            if (node < node.parent!!) {
-                var sibling = node.parent?.right as RBNode
-                if (sibling.color == RED) {
-                    sibling.color = BLACK
-                    node.parent?.color = BLACK // RED
+    private fun deletionAdjusting(elem: RBNode) {
+        var node = elem as RBNode?
+        while (node != root && isBlack(node)) {
+            if (node!!.data < node.parent?.data) {
+                var sibling = node.parent?.right as RBNode?
+                if (isRed(sibling)) {
+                    sibling!!.color = BLACK
+                    node.parent!!.color = RED
                     rotateLeft(node.parent!!)
-                    sibling = node.parent?.right as RBNode
-                    sibling.color = RED // TODO("fix")
+                    sibling = node.parent?.right as RBNode?
                 }
-                if ((sibling.left as RBNode?)?.color == BLACK && (sibling.right as RBNode?)?.color == BLACK) {
-                    sibling.color = RED
-                    node = node.parent!!
-                    continue
-                } else if ((sibling.right as RBNode?)?.color == BLACK) {
-                    (sibling.left as RBNode?)?.color = BLACK
-                    sibling.color = RED
-                    rotateRight(sibling)
-                    sibling = node.parent?.right as RBNode
-                }
-                if ((sibling.right as RBNode?)?.isRed() ?: return) {
-                    sibling.color = node.parent?.color!!
+                if (isBlack(sibling?.left as RBNode?) && isBlack(sibling?.right as RBNode?)) {
+                    sibling!!.color = RED
+                    node = node.parent
+                } else if (sibling != null) {
+                    if (isBlack(sibling.right as RBNode?)) {
+                        (sibling.left as RBNode?)?.color = BLACK
+                        sibling.color = RED
+                        rotateRight(sibling)
+                        sibling = node.parent?.right as RBNode?
+                    }
+                    sibling!!.color = node.parent!!.color
                     node.parent?.color = BLACK
                     (sibling.right as RBNode?)?.color = BLACK
                     rotateLeft(node.parent!!)
-                    node = root as RBNode
+                    node = root as RBNode?
+                } else {
+                    node.color = BLACK
+                    node = node.parent
                 }
             } else {
-                var sibling = node.parent?.left as RBNode
-                if (sibling.color == RED) {
-                    sibling.color = BLACK
-                    node.parent?.color = BLACK //RED TODO("FIX")
+                var sibling = node.parent?.left as RBNode?
+                if (isRed(sibling)) {
+                    sibling!!.color = BLACK
+                    (node.parent as RBNode).color = RED
                     rotateRight(node.parent!!)
-                    sibling = node.parent?.left as RBNode
-                    sibling.color = RED // TODO("fix")
+                    sibling = node.parent?.left as RBNode?
                 }
-                if (sibling.left == null) return
-                if ((sibling.left as RBNode?)?.color == BLACK && (sibling.right as RBNode?)?.color == BLACK) {
-                    sibling.color = RED
-                    node = node.parent!!
-                    continue
-                } else if ((sibling.left as RBNode?)?.color == BLACK) {
-                    (sibling.right as RBNode?)?.color = BLACK
-                    sibling.color = RED
-                    rotateLeft(sibling)
-                    sibling = node.parent?.left as RBNode
-                }
-                if ((sibling.left as RBNode?)?.isRed() ?: return) { // TODO("2")
-                    sibling.color = node.parent?.color!!
+                if (isBlack(sibling?.left as RBNode?) && isBlack(sibling?.right as RBNode?)) {
+                    sibling!!.color = RED
+                    node = node.parent
+                } else if (sibling != null) {
+                    if (isBlack(sibling.left as RBNode?)) {
+                        (sibling.right as RBNode?)?.color = BLACK
+                        sibling.color = RED
+                        rotateLeft(sibling)
+                        sibling = node.parent?.left as RBNode?
+                    }
+                    sibling!!.color = (node.parent as RBNode).color
                     node.parent?.color = BLACK
                     (sibling.left as RBNode?)?.color = BLACK
                     rotateRight(node.parent!!)
-                    node = root as RBNode
+                    node = root as RBNode?
+                } else {
+                    node.color = BLACK
+                    node = node.parent
                 }
             }
         }
-        node.parent = null
     }
 
     private fun rotateLeft(node: RBNode) {
-        if (node != root) {
-            if (node == node.parent?.left) node.parent?.left = node.right
-            else node.parent?.right = node.right
-            (node.right as RBNode).parent = node.parent
-            node.parent = node.right as RBNode?
-            if (node.right?.left != null) (node.right?.left as RBNode).parent = node
-            node.apply {
-                right = node.right?.left
-                parent?.left = node
-            }
-        } else {
-            val right = root?.right as RBNode
-            root?.right = right.left
-            (root?.right as RBNode).parent = root as RBNode
-            right.parent = root as RBNode
-            right.left = root
-            (root as RBNode).parent = right
-            right.parent = null
-            root = right
-        }
+        val right = node.right as RBNode?
+        right?.parent = node.parent
+
+        node.right = right?.left as RBNode?
+        node.right?.let { (it as RBNode?)?.parent = node }
+
+        right?.left = node
+        node.parent = right
+
+        if (right?.parent != null) {
+            if (node == right.parent?.left) right.parent?.left = right
+            else right.parent?.right = right
+        } else root = right
     }
 
     private fun rotateRight(node: RBNode) {
-        if (node != root) {
-            if (node == node.parent?.left) node.parent?.left = node.left
-            else node.parent?.right = node.left
-            (node.left as RBNode).parent = node.parent
-            node.parent = node.left as RBNode
-            if (node.left?.right != null) (node.left?.right as RBNode).parent = node
-            node.apply {
-                left = node.left?.right
-                parent?.right = node
-            }
-        } else {
-            val left = root?.left as RBNode
-            root?.left = left.right
-            (root as RBNode).parent = left
-//            (root as RBNode).color = BLACK
-            (left.right as RBNode).parent = root as RBNode
-//            (left.right as RBNode).color = RED
-            left.right = root
-            left.parent = null
-            root = left
-        }
+        val left = node.left as RBNode?
+        left?.parent = node.parent
+
+        node.left = left?.right
+        node.left?.let { (it.left as RBNode?)?.parent = node }
+
+        left?.right = node
+        node.parent = left
+
+        if (left?.parent != null) {
+            if (node == left.parent?.left) left.parent?.left = left
+            else left.parent?.right = left
+        } else root = left
     }
+
+    private fun isRed(node: RBNode?) = node?.let { it.color == RED } ?: false
+
+    private fun isBlack(node: RBNode?) = node?.let { it.color == BLACK } ?: false
 
     inner class RBNode(data: Int, var color: Color = RED) : Node(data) {
         var parent: RBNode? = null
-
-        fun isRed() = color == RED // let compiler inserts != null
-
-        fun isBlack() = color == BLACK // let compiler inserts != null
 
         fun getSibling() = when {
             this == root -> null
