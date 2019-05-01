@@ -29,6 +29,11 @@ class Tree234 {
         }
     }
 
+    fun min(): Int = minRecursively(root)?.getItem(0)!!.data
+
+    private fun minRecursively(node: Node?): Node? =
+        node?.getChild(0)?.let { minRecursively(it) } ?: node
+
     fun insert(value: Int) {
         var current = root
         val tmp = DataItem(value)
