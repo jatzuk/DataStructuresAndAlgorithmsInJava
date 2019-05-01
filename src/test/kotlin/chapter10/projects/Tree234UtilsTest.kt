@@ -1,9 +1,9 @@
 package chapter10.projects
 
 import chapter10.Tree234
+import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 
 /* 
@@ -23,7 +23,6 @@ import org.junit.Test
 class Tree234UtilsTest {
     private val tree = Tree234()
 
-    @Ignore
     @Before
     fun setUp() {
         with(tree) {
@@ -37,11 +36,24 @@ class Tree234UtilsTest {
             insert(80)
             insert(0)
             displayTree()
+            println()
         }
     }
 
     @Test
     fun minTest() {
         assertEquals(0, tree.min())
+    }
+
+    @Test
+    fun orderTraverseTest() {
+        tree.orderTraverse()
+    }
+
+    @Test
+    fun sortTest() {
+        val target = generateSequence(100) { it - 1 }.take(9).toList().toTypedArray()
+        val result = tree.sort(target)
+        assertArrayEquals(target, result)
     }
 }

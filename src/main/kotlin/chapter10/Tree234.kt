@@ -34,6 +34,43 @@ class Tree234 {
     private fun minRecursively(node: Node?): Node? =
         node?.getChild(0)?.let { minRecursively(it) } ?: node
 
+    fun orderTraverse() {
+        inOrder(root)
+    }
+
+    private fun inOrder(node: Node) {
+        if (node.isLeaf()) {
+            repeat(node.numItems) { node.getItem(it)!!.displayItem() }
+            return
+        } else {
+            repeat(node.numItems + 1) {
+                inOrder(node.getChild(it)!!)
+                if (it < node.numItems) node.getItem(it)!!.displayItem()
+            }
+        }
+    }
+
+    fun sort(keys: Array<Int>): Array<Int> {
+        recursivelySort(keys, root, 0)
+        return keys
+    }
+
+    private fun recursivelySort(array: Array<Int>, node: Node, n: Int): Int {
+        var j = n
+        if (node.isLeaf()) {
+            repeat(node.numItems) {
+                array[it] = node.getItem(it)!!.data
+                j++
+            }
+        } else {
+            repeat(node.numItems + 1) {
+                j = recursivelySort(array, node.getChild(it)!!, j)
+                if (it < node.numItems) array[j++] = node.getItem(it)!!.data
+            }
+        }
+        return j
+    }
+
     fun insert(value: Int) {
         var current = root
         val tmp = DataItem(value)
