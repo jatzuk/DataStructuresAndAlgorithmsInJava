@@ -56,19 +56,16 @@ class Tree234 {
     }
 
     private fun recursivelySort(array: Array<Int>, node: Node, n: Int): Int {
-        var j = n
+        var i = n
         if (node.isLeaf()) {
-            repeat(node.numItems) {
-                array[it] = node.getItem(it)!!.data
-                j++
-            }
+            repeat(node.numItems) { array[i++] = node.getItem(it)!!.data }
         } else {
             repeat(node.numItems + 1) {
-                j = recursivelySort(array, node.getChild(it)!!, j)
-                if (it < node.numItems) array[j++] = node.getItem(it)!!.data
+                i = recursivelySort(array, node.getChild(it)!!, i)
+                if (it < node.numItems) array[i++] = node.getItem(it)!!.data
             }
         }
-        return j
+        return i
     }
 
     fun insert(value: Int) {
