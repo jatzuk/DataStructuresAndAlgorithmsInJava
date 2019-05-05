@@ -48,11 +48,10 @@ class Tree23 : Tree234() {
         val right = Node(ORDER).apply { insertItem(items[2]) }
 
         if (node == root) {
-            Node(ORDER).apply {
+            root = Node(ORDER).apply {
                 insertItem(items[1])
                 connectChild(0, node)
                 connectChild(1, right)
-                root = this
             }
             return right
         } else if (parent!!.isFull()) {
