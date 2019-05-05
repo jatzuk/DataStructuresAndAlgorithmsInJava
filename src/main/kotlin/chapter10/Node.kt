@@ -14,9 +14,9 @@ package chapter10
  *                                           ***___***
  */
 
-class Node {
-    private val childArray = arrayOfNulls<Node>(ORDER)
-    private val itemArray = arrayOfNulls<DataItem>(ORDER - 1)
+class Node(private val order: Int) {
+    private val childArray = arrayOfNulls<Node>(order)
+    private val itemArray = arrayOfNulls<DataItem>(order - 1)
     var numItems = 0
         private set
     var parent: Node? = null
@@ -26,7 +26,7 @@ class Node {
 
     fun getItem(index: Int) = itemArray[index]
 
-    fun isFull() = numItems == ORDER - 1
+    fun isFull() = numItems == order - 1
 
     fun getChild(childNum: Int) = childArray[childNum]
 
@@ -42,7 +42,7 @@ class Node {
     }
 
     fun findItem(key: Int): Int {
-        for (i in 0 until ORDER - 1) {
+        for (i in 0 until order - 1) {
             if (itemArray[i] == null) break
             else if (itemArray[i]!!.data == key) return i
         }
@@ -52,7 +52,7 @@ class Node {
     fun insertItem(newItem: DataItem): Int {
         numItems++
         val newKey = newItem.data
-        for (i in ORDER - 2 downTo 0) {
+        for (i in order - 2 downTo 0) {
             if (itemArray[i] != null) {
                 val itsKey = itemArray[i]!!.data
                 if (newKey < itsKey) itemArray[i + 1] = itemArray[i]
@@ -75,10 +75,6 @@ class Node {
     fun displayNode() {
         for (i in 0 until numItems) itemArray[i]!!.displayItem()
         println("/")
-    }
-
-    companion object {
-        private const val ORDER = 4
     }
 }
 

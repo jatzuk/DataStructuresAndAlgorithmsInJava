@@ -14,8 +14,8 @@ package chapter10
  *                                           ***___***
  */
 
-class Tree234 {
-    private var root = Node()
+open class Tree234 {
+    private var root = Node(ORDER)
 
     fun find(key: Int): Int {
         var current = root as Node?
@@ -36,6 +36,7 @@ class Tree234 {
 
     fun orderTraverse() {
         inOrder(root)
+        println()
     }
 
     private fun inOrder(node: Node) {
@@ -93,7 +94,7 @@ class Tree234 {
         val parent: Node
 
         if (node == root) {
-            root = Node()
+            root = Node(ORDER)
             parent = root
             root.connectChild(0, node)
         } else parent = node.parent!!
@@ -105,7 +106,7 @@ class Tree234 {
             parent.connectChild(i + 1, tmp)
         }
 
-        parent.connectChild(itemIndex + 1, Node().apply {
+        parent.connectChild(itemIndex + 1, Node(ORDER).apply {
             insertItem(itemC)
             connectChild(0, child2)
             connectChild(1, child3)
@@ -133,5 +134,9 @@ class Tree234 {
             if (nextNode != null) recDisplayTree(nextNode, level + 1, i)
             else return
         }
+    }
+
+    companion object {
+        private const val ORDER = 4
     }
 }
