@@ -15,7 +15,7 @@ package chapter10
  */
 
 open class Tree234 {
-    private var root = Node(ORDER)
+    protected open var root = Node(ORDER)
 
     fun find(key: Int): Int {
         var current = root as Node?
@@ -72,7 +72,7 @@ open class Tree234 {
         return j
     }
 
-    fun insert(value: Int) {
+    open fun insert(value: Int) {
         var current = root
         val tmp = DataItem(value)
         while (true) {
@@ -113,7 +113,7 @@ open class Tree234 {
         })
     }
 
-    private fun getNextChild(node: Node, value: Int): Node {
+    protected fun getNextChild(node: Node, value: Int): Node {
         var i = 0
         while (i < node.numItems) {
             if (value < node.getItem(i)!!.data) return node.getChild(i)!!
