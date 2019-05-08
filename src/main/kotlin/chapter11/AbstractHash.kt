@@ -3,7 +3,7 @@ package chapter11
 /*
  * Created with passion and love
  *    for project DataStructuresAndAlgorithmsInJava(Lafore)
- *        by Jatzuk on 05.05.2019
+ *        by Jatzuk on 08.05.2019
  *                                            *_____*
  *                                           *_*****_*
  *                                          *_(O)_(O)_*
@@ -14,52 +14,51 @@ package chapter11
  *                                           ***___***
  */
 
-class DoubleHash(size: Int) : AbstractHash<Int>(size) {
-    override fun insert(item: DataItem<Int>) {
-        throw NotImplementedError("use this instead: fun insert(key: Int, item: DataItem<Int>)")
+abstract class AbstractHash<T>(size: Int) {
+    protected val array = arrayOfNulls<DataItem<T>>(size)
+
+    open fun displayTable() {
+        print("${this::class.java.simpleName} Table: ")
+        repeat(array.size) { print("${array[it]?.key ?: "**"} ") }
+        println()
     }
 
-    fun insert(key: Int, item: DataItem<Int>) {
+    open fun insert(item: DataItem<T>) {
+        val key = item.key
         var hash = hashFun(key)
-        val stepSize = hashFun2(key)
         while (array[hash] != null && array[hash]?.key != null) {
-            hash += stepSize
+            hash++
             hash %= array.size
         }
         array[hash] = item
     }
 
-    override fun delete(key: Int): DataItem<Int>? {
+    open fun delete(key: T): DataItem<T>? {
         var hash = hashFun(key)
-        val stepSize = hashFun2(key)
-        while (array[hash]?.key != null) {
+        while (array[hash] != null) {
             if (array[hash]?.key == key) {
                 val tmp = array[hash]
                 array[hash] = null
                 return tmp
             }
-            hash += stepSize
+            hash++
             hash %= array.size
         }
         return null
     }
 
-    override fun find(key: Int): DataItem<Int>? {
+    open fun find(key: T): DataItem<T>? {
         var hash = hashFun(key)
-        val stepSize = hashFun2(key)
         while (array[hash] != null) {
             if (array[hash]?.key == key) return array[hash]
-            hash += stepSize
+            hash++
             hash %= array.size
         }
         return null
     }
 
-    override fun hashFun(key: Int): Int = key % array.size
+    protected abstract fun hashFun(key: T): Int
 
-    private fun hashFun2(key: Int) = SEED - key % SEED
-
-    companion object {
-        private const val SEED = 5
-    }
+    class DataItem<T>(val key: T)
 }
+

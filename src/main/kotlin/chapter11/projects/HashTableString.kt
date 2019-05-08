@@ -1,9 +1,11 @@
-package chapter11
+package chapter11.projects
+
+import chapter11.AbstractHash
 
 /*
  * Created with passion and love
  *    for project DataStructuresAndAlgorithmsInJava(Lafore)
- *        by Jatzuk on 05.05.2019
+ *        by Jatzuk on 08.05.2019
  *                                            *_____*
  *                                           *_*****_*
  *                                          *_(O)_(O)_*
@@ -14,17 +16,13 @@ package chapter11
  *                                           ***___***
  */
 
-class Hash(size: Int) : AbstractHash<Int>(size) {
-    fun quadraticProbing(item: DataItem<Int>) {
-        val key = item.key
-        var hash = hashFun(key)
-        var pow = 1
-        while (array[hash] != null && array[hash]?.key != null) {
-            hash += (pow * pow++)
-            hash %= array.size
+class HashTableString(size: Int): AbstractHash<String>(size) {
+    override fun hashFun(key: String): Int {
+        var hash = 0
+        repeat(key.length) {
+            val letter = key[it].toLowerCase().toInt() - 96
+            hash = (hash * 27 + letter) % array.size
         }
-        array[hash] = item
+        return hash
     }
-
-    override fun hashFun(key: Int): Int = key % array.size
 }

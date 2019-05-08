@@ -18,12 +18,21 @@ import java.lang.Math.random
  */
 
 class HashTest {
-    private val table = Hash(13)
+    private val tableSize = 13
+    private val table = Hash(tableSize)
 
     @Test
     fun hashTableTest() {
         with(table) {
-            repeat(6) { insert(DataItem((random() * 10 * size).toInt())) }
+            repeat(6) { insert(AbstractHash.DataItem((random() * 10 * tableSize).toInt())) }
+            displayTable()
+        }
+    }
+
+    @Test
+    fun quadraticProbingTest() {
+        with(table) {
+            repeat(10) { quadraticProbing(AbstractHash.DataItem(((random() * 10 * tableSize).toInt()))) }
             displayTable()
         }
     }

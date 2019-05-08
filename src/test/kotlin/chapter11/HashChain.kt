@@ -1,12 +1,13 @@
 package chapter11
 
+import org.junit.Before
 import org.junit.Test
 import java.lang.Math.random
 
 /* 
  * Created with passion and love
  *    for project DataStructuresAndAlgorithmsInJava(Lafore)
- *        by Jatzuk on 05.05.2019
+ *        by Jatzuk on 08.05.2019
  *                                            *_____*
  *                                           *_*****_*
  *                                          *_(O)_(O)_*
@@ -17,17 +18,25 @@ import java.lang.Math.random
  *                                           ***___***
  */
 
-class DoubleHashTest {
-    private val tableSize = 13
-    private val table = DoubleHash(tableSize)
+class HashChainTest {
+    private val hashTableSize = 20
+    private val hashChain = HashChain(hashTableSize)
+    private val keysPerCell = 100
+
+    @Before
+    fun setUp() {
+        repeat(hashTableSize) {
+            hashChain.insert((random() * keysPerCell * hashTableSize).toInt())
+        }
+    }
 
     @Test
-    fun doubleHashTest() {
-        with(table) {
-            repeat(6) {
-                val key = (random() * 2 * tableSize).toInt()
-                insert(key, AbstractHash.DataItem(key))
-            }
+    fun hashChainTest() {
+        with(hashChain) {
+            insert(10)
+            displayTable()
+            delete(10)
+            println("--------------")
             displayTable()
         }
     }
