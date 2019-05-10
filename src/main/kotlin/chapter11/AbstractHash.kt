@@ -15,7 +15,7 @@ package chapter11
  */
 
 abstract class AbstractHash<T>(size: Int) {
-    protected val array = arrayOfNulls<DataItem<T>>(size)
+    protected var array = arrayOfNulls<DataItem<T>>(size)
 
     open fun displayTable() {
         print("${this::class.java.simpleName} Table: ")
