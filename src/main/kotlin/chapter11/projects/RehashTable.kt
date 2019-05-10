@@ -22,7 +22,7 @@ class RehashTable(size: Int) : AbstractHash<Int>(size) {
     override fun hashFun(key: Int) = key % array.size
 
     override fun insert(item: DataItem<Int>) {
-        if ((inserts + 1).toFloat() / array.size >= loadFactor) rehash(item)
+        if ((inserts + 1).toFloat() / array.size >= LOAD_FACTOR) rehash(item)
         else {
             super.insert(item)
             inserts++
@@ -38,6 +38,6 @@ class RehashTable(size: Int) : AbstractHash<Int>(size) {
     }
 
     companion object {
-        private const val loadFactor = 0.5f
+        private const val LOAD_FACTOR = 0.5f
     }
 }
