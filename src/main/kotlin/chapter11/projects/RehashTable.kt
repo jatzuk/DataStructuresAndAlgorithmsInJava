@@ -17,7 +17,7 @@ import chapter11.AbstractHash
  */
 
 class RehashTable(size: Int) : AbstractHash<Int>(size) {
-    var inserts = 0
+    private var inserts = 0
 
     override fun hashFun(key: Int) = key % array.size
 
