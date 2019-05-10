@@ -38,6 +38,6 @@ class RehashTable(size: Int) : AbstractHash<Int>(size) {
     }
 
     companion object {
-        const val loadFactor = 0.5f
+        private const val loadFactor = 0.5f
     }
 }
