@@ -15,30 +15,30 @@ package chapter11
  */
 
 class HashChain(size: Int) {
-    private val hashArray = Array(size) { SortedList() }
+    private val array = Array(size) { SortedList() }
 
     fun displayTable() {
-        repeat(hashArray.size) {
+        repeat(array.size) {
             print("$it. ")
-            hashArray[it].displayList()
+            array[it].displayList()
         }
     }
 
-    private fun hashFun(key: Int) = key % hashArray.size
+    private fun hashFun(key: Int) = key % array.size
 
     fun insert(data: Int) {
         val hash = hashFun(data)
-        hashArray[hash].insert(Link(data))
+        array[hash].insert(Link(data))
     }
 
     fun delete(key: Int) {
         val hash = hashFun(key)
-        hashArray[hash].delete(key)
+        array[hash].delete(key)
     }
 
     fun find(key: Int): Link? {
         val hash = hashFun(key)
-        return hashArray[hash].find(key)
+        return array[hash].find(key)
     }
 
    inner class Link(val data: Int) {

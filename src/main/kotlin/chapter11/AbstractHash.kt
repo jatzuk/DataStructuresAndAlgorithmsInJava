@@ -24,8 +24,7 @@ abstract class AbstractHash<T>(size: Int) {
     }
 
     open fun insert(item: DataItem<T>) {
-        val key = item.key
-        var hash = hashFun(key)
+        var hash = hashFun(item.key)
         while (array[hash] != null && array[hash]?.key != null) {
             hash++
             hash %= array.size
