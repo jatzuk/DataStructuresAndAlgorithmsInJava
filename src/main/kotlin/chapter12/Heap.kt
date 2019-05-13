@@ -28,7 +28,7 @@ open class Heap(size: Int) {
         }
     }
 
-    open fun trickleUp(position: Int) {
+    protected open fun trickleUp(position: Int) {
         var index = position
         var parent = (index - 1) / 2
         val bottom = array[index]
@@ -49,7 +49,7 @@ open class Heap(size: Int) {
         return root
     }
 
-    fun trickleDown(position: Int) {
+    protected fun trickleDown(position: Int) {
         var index = position
         val top = array[index]
 
@@ -67,7 +67,7 @@ open class Heap(size: Int) {
         array[index] = top
     }
 
-    fun change(index: Int, value: Int): Boolean {
+    protected fun change(index: Int, value: Int): Boolean {
         if (index <= 0 || index >= currentSize) return false
         val oldValue = array[index]!!.data
         array[index]!!.data = value

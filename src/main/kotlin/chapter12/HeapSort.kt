@@ -17,6 +17,13 @@ package chapter12
 class HeapSort(size: Int) : Heap(size) {
     public override var currentSize = 0
 
+    fun heapSort() {
+        for (i in array.size / 2 - 1 downTo 0) trickleDown(i)
+        val size = currentSize
+        for (i in array.size - 1 downTo 0) insertAt(i, remove()!!)
+        currentSize = size
+    }
+
     fun insertAt(index: Int, node: Node) {
         array[index] = node
     }

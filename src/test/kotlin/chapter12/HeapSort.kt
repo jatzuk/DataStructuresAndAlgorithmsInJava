@@ -30,15 +30,7 @@ class HeapSortTest {
                 currentSize++
             }
             displayArray()
-            for (i in heapSize / 2 - 1 downTo 0) trickleDown(i)
-            print("Heap: ")
-            displayArray()
-            displayHeap()
-            for (i in heapSize - 1 downTo 0) {
-                val biggestNode = remove()
-                insertAt(i, biggestNode!!)
-            }
-            print("Sorted: ")
+            heapSort()
             displayArray()
         }
     }
