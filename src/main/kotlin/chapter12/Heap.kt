@@ -18,6 +18,7 @@ package chapter12
 open class Heap(size: Int) {
     protected val array = arrayOfNulls<Node>(size)
     protected open var currentSize = 0
+    private var order = Order.DESCENDING
 
     open fun insert(key: Int): Boolean {
         return if (currentSize == array.size) false
@@ -33,12 +34,17 @@ open class Heap(size: Int) {
         var parent = (index - 1) / 2
         val bottom = array[index]
 
-        while (index > 0 && array[parent]!!.data < bottom!!.data) {
+        while (index > 0 && chooseOrder(order)(array[parent]!!, bottom!!)) {
             array[index] = array[parent]
             index = parent
             parent = (parent - 1) / 2
         }
         array[index] = bottom
+    }
+
+    private fun chooseOrder(order: Order): (first: Node, second: Node) -> Boolean {
+        if (order == Order.DESCENDING) return { first, second -> first < second }
+        return { first, second -> first > second }
     }
 
     fun remove(): Node? {
@@ -54,15 +60,15 @@ open class Heap(size: Int) {
         val top = array[index]
 
         while (index < currentSize / 2) {
-            val leftChild = 2 * index + 1
-            val rightChild = leftChild + 1
-            val largerChild =
-                if (rightChild < currentSize && array[leftChild]!! < array[rightChild]) rightChild
-                else leftChild
+            val left = 2 * index + 1
+            val right = left + 1
+            val child =
+                if (right < currentSize && chooseOrder(order)(array[left]!!, array[right]!!)) right
+                else left
 
-            if (top!! >= array[largerChild]) break
-            array[index] = array[largerChild]
-            index = largerChild
+            if (!chooseOrder(order)(top!!, array[child]!!)) break
+            array[index] = array[child]
+            index = child
         }
         array[index] = top
     }
@@ -106,4 +112,6 @@ open class Heap(size: Int) {
     class Node(var data: Int) : Comparable<Node?> {
         override fun compareTo(other: Node?) = other?.let { data.compareTo(it.data) } ?: 1
     }
+
+    enum class Order { ASCENDING, DESCENDING }
 }

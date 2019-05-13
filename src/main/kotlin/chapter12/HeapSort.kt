@@ -35,10 +35,10 @@ class HeapSort(size: Int) : Heap(size) {
         )
     }
 
-    @Throws(UnsupportedOperationException::class)
-    override fun trickleUp(position: Int) {
-        throw UnsupportedOperationException("operation trickleUp(position: Int) is not supported")
-    }
+//    @Throws(UnsupportedOperationException::class)
+//    override fun trickleUp(position: Int) {
+//        throw UnsupportedOperationException("operation trickleUp(position: Int) is not supported")
+//    }
 
     fun displayArray() {
         repeat(array.size) { print("${array[it]?.data} ") }

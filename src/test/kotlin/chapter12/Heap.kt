@@ -1,5 +1,6 @@
 package chapter12
 
+import org.junit.Before
 import org.junit.Test
 
 /* 
@@ -19,9 +20,10 @@ import org.junit.Test
 class HeapTest {
     private val heap = Heap(31)
 
-    @Test
-    fun heapTest() {
+    @Before
+    fun setUp() {
         with(heap) {
+            Heap.Order.ASCENDING.changeEncapsulatedProperty()
             insert(70)
             insert(40)
             insert(50)
@@ -32,11 +34,24 @@ class HeapTest {
             insert(30)
             insert(10)
             insert(90)
+        }
+    }
+
+    @Test
+    fun heapTest() {
+        with(heap) {
             displayHeap()
             insert(53)
             displayHeap()
             remove()
             displayHeap()
+        }
+    }
+
+    private fun Heap.Order.changeEncapsulatedProperty() {
+        Heap::class.java.getDeclaredField("order").apply {
+            isAccessible = true
+            set(heap, this@changeEncapsulatedProperty)
         }
     }
 }
