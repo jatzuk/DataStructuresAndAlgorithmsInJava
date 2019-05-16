@@ -1,4 +1,7 @@
-package chapter12
+package chapter12.projects
+
+import org.junit.Before
+import org.junit.Test
 
 /* 
  * Created with passion and love
@@ -14,7 +17,26 @@ package chapter12
  *                                           ***___***
  */
 
-class PriorityQHeap(size: Int) : Heap(size) {
+class PriorityQTreeTest {
+    private val heap = PriorityQTree()
 
-    fun peek() = remove()
+    @Before
+    fun setUp() {
+        with(heap) {
+            insert(5)
+            insert(3)
+            insert(14)
+            insert(10)
+            insert(17)
+        }
+    }
+
+    @Test
+    fun priorityQTreeTest() {
+        with(heap) {
+            displayTree()
+            peek()
+            displayTree()
+        }
+    }
 }

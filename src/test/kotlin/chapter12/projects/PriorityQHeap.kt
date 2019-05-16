@@ -1,4 +1,4 @@
-package chapter12
+package chapter12.projects
 
 import org.junit.Before
 import org.junit.Test
@@ -18,23 +18,24 @@ import java.lang.Math.random
  *                                           ***___***
  */
 
-class HeapTossTest {
-    private val heapSize = 10
-    private val heap = HeapToss(heapSize)
+class PriorityQHeapTest {
+    private val queueSize = 10
+    private val queue = PriorityQHeap(queueSize)
 
     @Before
     fun setUp() {
-        with(heap) {
-            repeat(heapSize) { toss((random() * 100).toInt()) }
+        with(queue) {
+            repeat(queueSize) { insert((random() * 100).toInt()) }
         }
     }
 
     @Test
-    fun heapTossTest() {
-        with(heap) {
-            displayHeap()
-            restoreHeap()
-            displayHeap()
+    fun priorityQHeapTest() {
+        with(queue) {
+            repeat(queueSize / 2) {
+                displayHeap()
+                peek()
+            }
         }
     }
 }

@@ -1,4 +1,6 @@
-package chapter12
+package chapter12.projects
+
+import chapter8.BinaryTree
 
 /* 
  * Created with passion and love
@@ -14,16 +16,12 @@ package chapter12
  *                                           ***___***
  */
 
-class HeapToss(size: Int) : Heap(size) {
-    fun toss(key: Int): Boolean {
-        return if (currentSize == array.size) false
-        else {
-            array[currentSize++] = Node(key)
-            true
-        }
-    }
+class PriorityQTree : BinaryTree<Int>() {
+    fun peek() = removeMax()
 
-    fun restoreHeap() {
-        for (i in array.size / 2 - 1 downTo 0) trickleDown(i)
+    private fun BinaryTree<Int>.removeMax(): Node? {
+        var current = root
+        while (current?.right != null) current = current.right
+        return delete(current!!.data)
     }
 }

@@ -1,13 +1,11 @@
-package chapter12
+package chapter12.projects
 
-import chapter12.Heap.Node
-import org.junit.Test
-import java.lang.Math.random
+import chapter12.Heap
 
 /* 
  * Created with passion and love
  *    for project DataStructuresAndAlgorithmsInJava(Lafore)
- *        by Jatzuk on 12.05.2019
+ *        by Jatzuk on 16.05.2019
  *                                            *_____*
  *                                           *_*****_*
  *                                          *_(O)_(O)_*
@@ -18,20 +16,16 @@ import java.lang.Math.random
  *                                           ***___***
  */
 
-class HeapSortTest {
-    private val heapSize = 10
-    private val heap = HeapSort(heapSize)
-
-    @Test
-    fun heapSortTest() {
-        with(heap) {
-            repeat(heapSize) {
-                insertAt(it, Node((random() * 99 + 1).toInt()))
-                currentSize++
-            }
-            displayArray()
-            heapSort()
-            displayArray()
+class HeapToss(size: Int) : Heap(size) {
+    fun toss(key: Int): Boolean {
+        return if (currentSize == array.size) false
+        else {
+            array[currentSize++] = Node(key)
+            true
         }
+    }
+
+    fun restoreHeap() {
+        for (i in array.size / 2 - 1 downTo 0) trickleDown(i)
     }
 }

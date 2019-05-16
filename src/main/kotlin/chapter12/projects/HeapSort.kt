@@ -1,4 +1,6 @@
-package chapter12
+package chapter12.projects
+
+import chapter12.Heap
 
 /* 
  * Created with passion and love
