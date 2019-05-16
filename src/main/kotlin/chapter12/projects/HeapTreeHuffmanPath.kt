@@ -113,7 +113,7 @@ class HeapTreeHuffmanPath {
         var i = 0
         val path = Array(n) { 0 }
 
-        while (i > 0) {
+        while (n > 0) {
             path[i++] = n % 2
             n /= 2
         }

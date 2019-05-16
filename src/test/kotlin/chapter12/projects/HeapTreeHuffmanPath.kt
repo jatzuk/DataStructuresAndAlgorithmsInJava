@@ -16,7 +16,7 @@ import java.lang.Math.random
  *                                         **_________**
  *                                          *_________*
  *                                           ***___***
- * ex 5 tests
+ * ex 5 test
  */
 
 class HeapTreeHuffmanPathTest {
