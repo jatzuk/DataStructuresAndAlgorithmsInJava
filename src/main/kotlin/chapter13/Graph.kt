@@ -19,7 +19,6 @@ import chapter4.Stack
 class Graph(private val maxVerts: Int) {
     private val vertexes = arrayOfNulls<Vertex>(maxVerts)
     private val adjustMatrix = Array(maxVerts) { IntArray(maxVerts) }
-    private val stack = Stack(maxVerts)
     var verts = 0
 
     fun addVertex(label: Char) {
@@ -36,6 +35,7 @@ class Graph(private val maxVerts: Int) {
     }
 
     fun dfs() {
+        val stack = Stack(maxVerts)
         vertexes[0]!!.isVisited = true
         displayVertex(0)
         stack.push(0)
@@ -49,6 +49,11 @@ class Graph(private val maxVerts: Int) {
                 stack.push(vertex)
             }
         }
+        resetFlags()
+    }
+
+    private fun resetFlags() {
+        vertexes.forEach { it?.isVisited = false }
     }
 
     fun getAdjustedUnvisitedVertex(vertex: Int): Int {
