@@ -1,5 +1,6 @@
 package chapter13
 
+import chapter4.Queue
 import chapter4.Stack
 
 /* 
@@ -16,22 +17,18 @@ import chapter4.Stack
  *                                           ***___***
  */
 
-class Graph(private val maxVerts: Int) {
-    private val vertexes = arrayOfNulls<Vertex>(maxVerts)
-    private val adjustMatrix = Array(maxVerts) { IntArray(maxVerts) }
-    var verts = 0
+open class Graph(private val maxVerts: Int) {
+    protected val vertexes = arrayOfNulls<Vertex>(maxVerts)
+    protected val adjustMatrix = Array(maxVerts) { IntArray(maxVerts) }
+    protected var verts = 0
 
     fun addVertex(label: Char) {
         vertexes[verts++] = Vertex(label)
     }
 
-    fun addEdge(start: Int, end: Int) {
+    open fun addEdge(start: Int, end: Int) {
         adjustMatrix[start][end] = 1
         adjustMatrix[end][start] = 1
-    }
-
-    fun displayVertex(vertex: Int) {
-        print("${vertexes[vertex]!!.label} ")
     }
 
     fun dfs() {
@@ -52,15 +49,58 @@ class Graph(private val maxVerts: Int) {
         resetFlags()
     }
 
+    fun bfs() {
+        val queue = Queue(maxVerts)
+        vertexes[0]!!.isVisited = true
+        displayVertex(0)
+        queue.insert(0)
+
+        while (!queue.isEmpty()) {
+            val vertex = queue.remove()
+            while (true) {
+                val nextVertex = getAdjustedUnvisitedVertex(vertex)
+                if (nextVertex == -1) break
+                vertexes[nextVertex]!!.isVisited = true
+                displayVertex(nextVertex)
+                queue.insert(nextVertex)
+            }
+        }
+        resetFlags()
+    }
+
+    fun mst() {
+        val stack = Stack(maxVerts)
+        vertexes[0]!!.isVisited = true
+        stack.push(0)
+
+        while (!stack.isEmpty()) {
+            val vertex = stack.peek()
+            val nextVertex = getAdjustedUnvisitedVertex(vertex)
+            if (nextVertex == -1) stack.pop()
+            else {
+                vertexes[nextVertex]!!.isVisited = true
+                stack.push(nextVertex)
+                displayVertex(vertex)
+                displayVertex(nextVertex)
+                print(" ")
+            }
+        }
+        resetFlags()
+    }
+
     private fun resetFlags() {
         vertexes.forEach { it?.isVisited = false }
     }
 
-    fun getAdjustedUnvisitedVertex(vertex: Int): Int {
+    private fun getAdjustedUnvisitedVertex(vertex: Int): Int {
         repeat(verts) {
             if (adjustMatrix[vertex][it] == 1 && !vertexes[it]!!.isVisited) return it
         }
         return -1
+    }
+
+    private fun displayVertex(vertex: Int) {
+        print(vertexes[vertex]!!.label)
     }
 
     class Vertex(val label: Char) {
