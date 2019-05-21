@@ -22,6 +22,7 @@ class TopologicalGraph(val size: Int) : Graph(size) {
     fun topologicalSort() {
         val array = CharArray(verts)
         val originalVerts = verts
+        val originalVertexes = vertexes.copyOf()
         while (verts > 0) {
             val vertex = noSuccessors()
             if (vertex == -1) throw IllegalStateException("Graph has cycles")
@@ -29,6 +30,7 @@ class TopologicalGraph(val size: Int) : Graph(size) {
             deleteVertex(vertex)
         }
         verts = originalVerts
+        originalVertexes.copyInto(vertexes)
         print("Topologically sorted order: ")
         repeat(verts) { print("${array[it]}") }
     }
