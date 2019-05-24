@@ -17,9 +17,9 @@ import org.junit.Test
  *                                           ***___***
  */
 
-class GraphTest {
+class MatrixGraphTest {
     private val size = 5
-    private val graph = Graph(size)
+    private val graph = MatrixGraph(size)
 
     @Before
     fun setUp() {
@@ -34,16 +34,12 @@ class GraphTest {
 
     @Test
     fun dfsTest() {
-        print("Visits: ")
         graph.dfs()
-        println()
     }
 
     @Test
     fun bfsTest() {
-        print("Visits: ")
         graph.bfs()
-        println()
     }
 
     @Test
@@ -57,6 +53,24 @@ class GraphTest {
             addEdge(2, 4)
             mst()
         }
-        println()
+    }
+
+    @Test
+    fun mstBfsTest() {
+        with(MatrixGraph(9)) {
+            repeat(9) { addVertex((65 + it).toChar()) }
+            addEdge(0, 1)
+            addEdge(0, 3)
+            addEdge(1, 2)
+            addEdge(2, 3)
+            addEdge(2, 8)
+            addEdge(3, 4)
+            addEdge(3, 7)
+            addEdge(4, 5)
+            addEdge(4, 8)
+            addEdge(5, 6)
+            addEdge(6, 7)
+            mstBfs()
+        }
     }
 }

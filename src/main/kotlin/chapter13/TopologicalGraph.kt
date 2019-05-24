@@ -14,7 +14,7 @@ package chapter13
  *                                           ***___***
  */
 
-class TopologicalGraph(val size: Int) : Graph(size) {
+class TopologicalGraph(val size: Int) : MatrixGraph(size) {
     override fun addEdge(start: Int, end: Int) {
         adjustMatrix[start][end] = 1
     }
@@ -25,7 +25,7 @@ class TopologicalGraph(val size: Int) : Graph(size) {
         val originalVertexes = vertexes.copyOf()
         while (verts > 0) {
             val vertex = noSuccessors()
-            if (vertex == -1) throw IllegalStateException("Graph has cycles")
+            if (vertex == -1) throw IllegalStateException("MatrixGraph has cycles")
             array[verts - 1] = vertexes[vertex]!!.label
             deleteVertex(vertex)
         }

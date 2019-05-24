@@ -6,7 +6,7 @@ import chapter4.Stack
 /* 
  * Created with passion and love
  *    for project DataStructuresAndAlgorithmsInJava(Lafore)
- *        by Jatzuk on 17.05.2019
+ *        by Jatzuk on 24.05.2019
  *                                            *_____*
  *                                           *_*****_*
  *                                          *_(O)_(O)_*
@@ -17,21 +17,18 @@ import chapter4.Stack
  *                                           ***___***
  */
 
-open class Graph(private val maxVerts: Int) {
+abstract class AbstractGraph<T>(private val maxVerts: Int) {
     protected val vertexes = arrayOfNulls<Vertex>(maxVerts)
-    protected val adjustMatrix = Array(maxVerts) { IntArray(maxVerts) }
     protected var verts = 0
+
+    protected abstract fun addEdge(start: Int, end: T)
 
     fun addVertex(label: Char) {
         vertexes[verts++] = Vertex(label)
     }
 
-    open fun addEdge(start: Int, end: Int) {
-        adjustMatrix[start][end] = 1
-        adjustMatrix[end][start] = 1
-    }
-
     fun dfs() {
+        print("Visits: ")
         val stack = Stack(maxVerts)
         vertexes[0]!!.isVisited = true
         displayVertex(0)
@@ -46,10 +43,12 @@ open class Graph(private val maxVerts: Int) {
                 stack.push(vertex)
             }
         }
+        println()
         resetFlags()
     }
 
     fun bfs() {
+        print("Visits: ")
         val queue = Queue(maxVerts)
         vertexes[0]!!.isVisited = true
         displayVertex(0)
@@ -65,10 +64,12 @@ open class Graph(private val maxVerts: Int) {
                 queue.insert(nextVertex)
             }
         }
+        println()
         resetFlags()
     }
 
     fun mst() {
+        print("Visits: ")
         val stack = Stack(maxVerts)
         vertexes[0]!!.isVisited = true
         stack.push(0)
@@ -85,18 +86,37 @@ open class Graph(private val maxVerts: Int) {
                 print(" ")
             }
         }
+        println()
         resetFlags()
     }
 
-    private fun resetFlags() {
-        vertexes.forEach { it?.isVisited = false }
+    fun mstBfs() {
+        print("Visits: ")
+        val queue = Queue(maxVerts)
+        vertexes[0]!!.isVisited = true
+        queue.insert(0)
+
+        while (!queue.isEmpty()) {
+            val vertex = queue.remove()
+            while (true) {
+                val nextVertex = getAdjustedUnvisitedVertex(vertex)
+                if (nextVertex == -1) break
+                vertexes[nextVertex]!!.isVisited = true
+                queue.insert(nextVertex)
+                displayVertex(vertex)
+                displayVertex(nextVertex)
+                queue.insert(nextVertex)
+                print(" ")
+            }
+        }
+        println()
+        resetFlags()
     }
 
-    private fun getAdjustedUnvisitedVertex(vertex: Int): Int {
-        repeat(verts) {
-            if (adjustMatrix[vertex][it] == 1 && !vertexes[it]!!.isVisited) return it
-        }
-        return -1
+    protected abstract fun getAdjustedUnvisitedVertex(vertex: Int): Int
+
+    private fun resetFlags() {
+        vertexes.forEach { it?.isVisited = false }
     }
 
     private fun displayVertex(vertex: Int) {
