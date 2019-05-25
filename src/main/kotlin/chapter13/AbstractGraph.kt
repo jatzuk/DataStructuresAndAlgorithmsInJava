@@ -27,12 +27,12 @@ abstract class AbstractGraph<T>(private val maxVerts: Int) {
         vertexes[verts++] = Vertex(label)
     }
 
-    fun dfs() {
+    fun dfs(start: Int = 0) {
         print("Visits: ")
         val stack = Stack(maxVerts)
-        vertexes[0]!!.isVisited = true
-        displayVertex(0)
-        stack.push(0)
+        vertexes[start]!!.isVisited = true
+        displayVertex(start)
+        stack.push(start)
 
         while (!stack.isEmpty()) {
             val vertex = getAdjustedUnvisitedVertex(stack.peek())
