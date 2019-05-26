@@ -17,5 +17,5 @@ import java.awt.EventQueue
  */
 
 fun main() {
-    EventQueue.invokeLater { KnightsTour.Frame.isVisible = true }
+    EventQueue.invokeLater { KnightsTour.isVisible = true }
 }
