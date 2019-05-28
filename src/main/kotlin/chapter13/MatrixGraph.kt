@@ -14,7 +14,7 @@ package chapter13
  *                                           ***___***
  */
 
-open class MatrixGraph(maxVerts: Int) : AbstractGraph<Int>(maxVerts) {
+open class MatrixGraph(maxVerts: Int) : AbstractGraph<Int, Char>(maxVerts) {
     val adjustMatrix = Array(maxVerts) { IntArray(maxVerts) }
 
     public override fun addEdge(start: Int, end: Int) {

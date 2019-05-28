@@ -15,7 +15,7 @@ package chapter5
  */
 
 class Stack<T> {
-    private val cyclicalList = CyclicalList<T>()
+    val cyclicalList = CyclicalList<T>()
 
     fun push(item: T) {
         cyclicalList.insert(item)

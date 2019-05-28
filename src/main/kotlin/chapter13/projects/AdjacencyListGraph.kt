@@ -16,7 +16,7 @@ import chapter13.AbstractGraph
  *                                           ***___***
  */
 
-class AdjacencyListGraph(maxVerts: Int) : AbstractGraph<Char>(maxVerts) {
+class AdjacencyListGraph(maxVerts: Int) : AbstractGraph<Char, Char>(maxVerts) {
     private val adjacencyList = Array(maxVerts) { ArrayList<Char>() }
 
     /**
