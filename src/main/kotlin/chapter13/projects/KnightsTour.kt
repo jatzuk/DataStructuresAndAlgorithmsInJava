@@ -36,7 +36,6 @@ object KnightsTour : JFrame("Knight's Tour") {
     private val BROWN = Color(205, 133, 63)
     private val knight = Knight
     private var backtrackFlag = false
-    var cou = 0
 
     init {
         contentPane = Canvas
@@ -68,7 +67,6 @@ object KnightsTour : JFrame("Knight's Tour") {
         }
 
         if (!stack.isEmpty()) {
-            cou++
             val top = stack.peek()!!
             val vertex = getAdjustedUnvisitedVertex(top)
             if (vertex == -1) {
@@ -108,7 +106,7 @@ object KnightsTour : JFrame("Knight's Tour") {
         private const val HEIGHT = N * 50
         private val bufferedImage = BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB)
         private var isRunning = false
-        private const val DELAY = 300
+        private const val DELAY = 0
         private val timer = Timer(DELAY, this)
 
         init {
