@@ -1,6 +1,7 @@
 package chapter13.projects
 
 import chapter13.AbstractGraph.Vertex
+import chapter13.projects.KnightsTour.Canvas.timer
 import chapter5.Stack
 import java.awt.*
 import java.awt.event.ActionEvent
@@ -29,12 +30,13 @@ import javax.swing.Timer
  */
 
 object KnightsTour : JFrame("Knight's Tour") {
-    private const val N = 8
-    private val knight = Knight
-    private val board = Array(N) { IntArray(N) }
+    private const val N = 4
+    private const val SIZE = N * N
+    private val vertexes = Array(SIZE) { KnightVertex(-1) }
+    private val matrix = Array(SIZE) { IntArray(SIZE) }
+    private val stack = Stack<Int>()
     private val BROWN = Color(205, 133, 63)
-    private val vertexes = arrayOfNulls<KnightVertex<Int>>(N * N)
-    private var verts = 0
+    private val knight = Knight
 
     init {
         contentPane = Canvas
@@ -42,32 +44,83 @@ object KnightsTour : JFrame("Knight's Tour") {
         setLocationRelativeTo(null)
         defaultCloseOperation = EXIT_ON_CLOSE
 
-        repeat(vertexes.size) { addVertex(it) }
-        repeat(N) { y ->
-            repeat(N) { x ->
-                repeat(knight.moves.size) {
-                    val dx = knight.moves[it][0]
-                    val dy = knight.moves[it][1]
-                    try {
-                        if (isValidMove(x + y, dx + dy)) addEdge(x + y, dx + dy)
-                    } catch (e: ArrayIndexOutOfBoundsException) {
-                        println("dx: $dx; dy: $dy")
+//        repeat(SIZE) { y ->
+//            repeat(SIZE) { x ->
+//                repeat(knight.moves.size) {
+//                    val dx = knight.moves[it][0]
+//                    val dy = knight.moves[it][1]
+//                    if (isValidMove(x + dx, y + dy)) addEdge(x + dx, y + dy)
+//                }
+////                addPossibleMoves(y, x)
+//            }
+//        }
+
+        for (y in 0 until N) {
+            for (x in 0 until N) {
+                for (m in 0 until knight.moves.size) {
+                    val dx = knight.moves[m][0]
+                    val dy = knight.moves[m][1]
+                    if (isValidMove(x + y, dx + dy)) {
+                        addEdge(x + y, (dx + dy) * 2)
                     }
                 }
             }
         }
 
-//        board[0][0] = 0
+        addEdge(0, 6)
+
+        repeat(SIZE) { y ->
+            repeat(SIZE) { x ->
+                print("${matrix[y][x]}\t")
+            }
+            println()
+        }
+
+//        vertexes[0].label = 0
+//        vertexes[0].isVisited = true
+//        stack.push(0)
+
+//        matrix[0][0] = 0
 //        knight.y = 0
 //        knight.x = 0
 //        knight.movesCounter = 1
         solve()
     }
 
+    private fun addPossibleMoves(i: Int, j: Int) {
+        val currentRow = i * N
+        val currentVertex = currentRow + j
+
+        if (i - 1 >= 0) {
+            if (j - 2 >= 0)
+                addEdge(currentVertex, currentVertex - N - 2)
+            if (j + 2 < N)
+                addEdge(currentVertex, currentVertex - N + 2)
+        }
+        if (i + 1 < N) {
+            if (j - 2 >= 0)
+                addEdge(currentVertex, currentVertex + N - 2)
+            if (j + 2 < N)
+                addEdge(currentVertex, currentVertex + N + 2)
+        }
+        if (i - 2 >= 0) {
+            if (j - 1 >= 0)
+                addEdge(currentVertex, currentVertex - (N * 2) - 1)
+            if (j + 1 < N)
+                addEdge(currentVertex, currentVertex - (N * 2) + 1)
+        }
+        if (i + 2 < N) {
+            if (j - 1 >= 0)
+                addEdge(currentVertex, currentVertex + (N * 2) - 1)
+            if (j + 1 < N)
+                addEdge(currentVertex, currentVertex + (N * 2) + 1)
+        }
+    }
+
     private fun solve() {
         val stack = Stack<Int>()
-        vertexes[0]!!.label = 0
-        vertexes[0]!!.isVisited = true
+        vertexes[0].label = 0
+        vertexes[0].isVisited = true
         stack.push(0)
 
         while (!stack.isEmpty()) {
@@ -75,57 +128,72 @@ object KnightsTour : JFrame("Knight's Tour") {
 
             if (stack.isFull()) {
                 println("WON")
+                repeat(N) { y ->
+                    //                    repeat(N) { x -> print("${vertexes[y * N + x]?.label}\t") }
+                    repeat(N) { x -> print("${matrix[y][x]}\t") }
+                    println()
+                }
                 break
             }
 
             val vertex = getAdjustedUnvisitedVertex(m)
             if (vertex == -1) {
-                with(vertexes[stack.pop()!!]!!) {
+                with(vertexes[stack.pop()!!]) {
                     label = -1
                     isVisited = false
                     lastVisited = -1
                 }
             } else {
-                vertexes[vertex]!!.isVisited = true
-                vertexes[m]!!.label = 1
-                vertexes[m]!!.lastVisited = vertex
+                vertexes[vertex].isVisited = true
+                vertexes[m].label = 1
+                vertexes[m].lastVisited = vertex
                 stack.push(vertex)
             }
         }
     }
 
-    private fun knightMove(x: Int = knight.x, y: Int = knight.y): Boolean {
-        println("move: ${knight.movesCounter}")
-        if (knight.movesCounter == N * N) return true
-        repeat(knight.moves.size) {
-            val dx = knight.moves[it][0] + x
-            val dy = knight.moves[it][1] + y
-            if (isValidMove(dx, dy)) {
-                board[dy][dx] = knight.movesCounter++
-                knight.x = dx
-                knight.y = dy
-                return true
+    private fun knightMove() {
+        println("MOVE")
+        if (!stack.isEmpty()) {
+            val top = stack.peek()!!
+
+            if (stack.isFull()) {
+                println("WON")
+                timer.stop()
+                println("${stack.cyclicalList.size}")
+                return
             }
-            return@repeat
+
+            val vertex = getAdjustedUnvisitedVertex(top)
+            if (vertex == -1) {
+                println("NO EDGE")
+                with(vertexes[stack.pop()!!]) {
+                    label = -1
+                    isVisited = false
+                    lastVisited = -1
+                }
+            } else {
+                println("HAS EDGE")
+                vertexes[top].isVisited = true
+                vertexes[vertex].label = 100
+                vertexes[top].lastVisited = vertex
+                stack.push(vertex)
+                knight.x = vertex
+                knight.y = top
+                repaint()
+            }
         }
-
-        return false
     }
 
-    private fun isValidMove(x: Int, y: Int) = x in 0 until N && y in 0 until N && board[y][x] == 0
-
-    private fun addVertex(label: Int) {
-        vertexes[verts++] = KnightVertex(label)
-    }
+    private fun isValidMove(x: Int, y: Int) = x in 0 until N && y in 0 until N && matrix[y][x] == 0
 
     private fun addEdge(start: Int, end: Int) {
-        board[start][end] = 1
-        board[end][start] = 1
+        matrix[start][end] = 1
     }
 
     private fun getAdjustedUnvisitedVertex(vertex: Int): Int {
-        for (i in vertexes[vertex]!!.lastVisited + 1 until verts) {
-            if (board[vertex][i] == 1 && !vertexes[i]!!.isVisited) return i
+        for (i in vertexes[vertex].lastVisited + 1 until SIZE) {
+            if (matrix[vertex][i] == 1 && !vertexes[i].isVisited) return i
         }
         return -1
     }
@@ -136,8 +204,8 @@ object KnightsTour : JFrame("Knight's Tour") {
         private const val HEIGHT = N * 50
         private val bufferedImage = BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB)
         private const val DELAY = 300
-        private val timer = Timer(DELAY, this)
         private var isRunning = false
+        val timer = Timer(DELAY, this)
 
         init {
             isFocusable = true
@@ -147,22 +215,21 @@ object KnightsTour : JFrame("Knight's Tour") {
             addKeyListener(object : KeyAdapter() {
                 override fun keyPressed(e: KeyEvent) {
                     if (e.keyCode == KeyEvent.VK_SPACE) {
-                        isRunning = if (!isRunning) {
-                            timer.start()
-//                            solve()
-                            true
-                        } else {
-                            timer.stop()
-                            false
-                        }
+//                        isRunning = if (!isRunning) {
+//                            timer.start()
+//                            true
+//                        } else {
+//                            timer.stop()
+//                            false
+//                        }
+                        knightMove()
                     }
                 }
             })
         }
 
         override fun actionPerformed(e: ActionEvent?) {
-//            knightMove()
-            repaint()
+            knightMove()
         }
 
         override fun paint(g: Graphics) {
@@ -175,26 +242,15 @@ object KnightsTour : JFrame("Knight's Tour") {
             super.paintComponent(g)
             val g = bufferedImage.graphics as Graphics2D
             g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
-//            repeat(N) { row ->
-//                repeat(N) { col ->
-//                    if (board[row][col] > 0) {
-//                        val x = col * 50
-//                        val y = row * 50
-////                        g.drawImage(knight.image, x, y, this)
-////                        g.color = Color.GREEN
-////                        g.fillOval(x, y + SQUARE_SIZE - 20, 20, 20)
-//                        g.color = Color.BLACK
-//                        g.drawString(knight.movesCounter.toString(), x + 5, y + SQUARE_SIZE - 5)
-//                    }
-//                }
-//            }
-            val x = knight.x * 50
-            val y = knight.y * 50
+            val x = knight.x * 21 // * 50
+            val y = knight.y * 21 // * 50
             g.drawImage(knight.image, x, y, this)
-            g.color = Color.GREEN
-            g.fillOval(x, y + SQUARE_SIZE - 20, 20, 20)
-            g.color = Color.BLACK
-            g.drawString(knight.movesCounter.toString(), x + 5, y + SQUARE_SIZE - 5)
+//            g.color = Color.GREEN
+//            g.fillOval(x, y + SQUARE_SIZE - 20, 20, 20)
+//            g.color = Color.BLACK
+//            g.drawString(knight.movesCounter.toString(), x + 5, y + SQUARE_SIZE - 5)
+//            println("x: $x; y: $y")
+            println("PAINT")
         }
 
         private fun drawBoard() {
@@ -244,5 +300,5 @@ object KnightsTour : JFrame("Knight's Tour") {
         var lastVisited = -1
     }
 
-    private fun Stack<Int>.isFull() = cyclicalList.size == N
+    private fun Stack<Int>.isFull() = cyclicalList.size == SIZE
 }
