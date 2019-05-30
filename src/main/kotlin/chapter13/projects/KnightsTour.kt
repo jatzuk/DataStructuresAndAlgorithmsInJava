@@ -71,16 +71,16 @@ object KnightsTour : JFrame("Knight's Tour") {
             val vertex = getAdjustedUnvisitedVertex(top)
             if (vertex == -1) {
                 with(vertexes[stack.pop()!!]) {
-                    label = -1
                     isVisited = false
                     lastVisited = -1
                     backtrackFlag = true
                     knight.update(top % N, top / N, knight.movesCounter - 1)
                 }
             } else {
-                vertexes[top].isVisited = true
-                vertexes[vertex].label = 1
-                vertexes[top].lastVisited = vertex
+                vertexes[top].apply {
+                    isVisited = true
+                    lastVisited = vertex
+                }
                 stack.push(vertex)
                 knight.update(vertex % N, vertex / N, knight.movesCounter + 1)
             }
@@ -106,7 +106,7 @@ object KnightsTour : JFrame("Knight's Tour") {
         private const val HEIGHT = N * 50
         private val bufferedImage = BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB)
         private var isRunning = false
-        private const val DELAY = 0
+        private const val DELAY = 300
         private val timer = Timer(DELAY, this)
 
         init {
