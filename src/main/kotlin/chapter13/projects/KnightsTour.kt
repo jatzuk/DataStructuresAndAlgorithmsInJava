@@ -1,6 +1,6 @@
 package chapter13.projects
 
-import chapter13.AbstractGraph.Vertex
+import chapter13.AbstractGraph.BaseVertex
 import chapter13.projects.KnightsTour.Canvas.switchState
 import chapter5.Stack
 import java.awt.*
@@ -197,7 +197,7 @@ object KnightsTour : JFrame("Knight's Tour") {
         }
     }
 
-    class BoardSquare<T>(override var label: T) : Vertex<T>(label) {
+    class BoardSquare<T>(override var label: T) : BaseVertex<T>(label) {
         var lastVisited = -1
     }
 

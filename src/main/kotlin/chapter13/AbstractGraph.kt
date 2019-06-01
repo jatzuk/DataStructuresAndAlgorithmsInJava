@@ -18,13 +18,13 @@ import chapter4.Stack
  */
 
 abstract class AbstractGraph<T, E>(private val maxVerts: Int) {
-    protected val vertexes = arrayOfNulls<Vertex<E>>(maxVerts)
+    protected open val vertexes = arrayOfNulls<Vertex<E>>(maxVerts)
     protected var verts = 0
 
     protected abstract fun addEdge(start: Int, end: T)
 
-    fun addVertex(label: E) {
-        vertexes[verts++] = Vertex(label)
+    open fun addVertex(label: E) {
+        vertexes[verts++] = BaseVertex(label)
     }
 
     fun dfs(start: Int = 0) {
@@ -123,7 +123,12 @@ abstract class AbstractGraph<T, E>(private val maxVerts: Int) {
         print(vertexes[vertex]!!.label)
     }
 
-    open class Vertex<T>(open val label: T) {
-        var isVisited = false
+    open class BaseVertex<T>(override val label: T): Vertex<T> {
+        override var isVisited = false
+    }
+
+    interface Vertex<T> {
+        val label: T
+        var isVisited: Boolean
     }
 }
