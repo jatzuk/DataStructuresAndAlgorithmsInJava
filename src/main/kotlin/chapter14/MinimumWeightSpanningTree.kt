@@ -16,8 +16,8 @@ import chapter13.MatrixGraph
  *                                           ***___***
  */
 
-class MinimumWeightSpanningTree(maxSize: Int) : MatrixGraph(maxSize) {
-    private val queue = PriorityQueue(maxSize)
+class MinimumWeightSpanningTree(maxVerts: Int) : MatrixGraph(maxVerts) {
+    private val queue = PriorityQueue(maxVerts)
 
     override fun addVertex(label: Char) {
         vertexes[verts++] = WeightVertex(label)
