@@ -1,6 +1,5 @@
 package chapter14
 
-import org.junit.Before
 import org.junit.Test
 
 /* 
@@ -18,11 +17,9 @@ import org.junit.Test
  */
 
 class DijkstraGraphTest {
-    private val graph = DijkstraGraph(20)
-
-    @Before
-    fun setUp() {
-        with(graph) {
+    @Test
+    fun shortestPathTest() {
+        with(DijkstraGraph(20)) {
             repeat(5) { addVertex((it + 65).toChar()) }
             addEdge(0, 1, 50)
             addEdge(0, 3, 80)
@@ -32,11 +29,10 @@ class DijkstraGraphTest {
             addEdge(3, 2, 20)
             addEdge(3, 4, 70)
             addEdge(4, 1, 50)
+            repeat(5) {
+                println("starting vertex: ${(it + 65).toChar()}")
+                path(it)
+            }
         }
-    }
-
-    @Test
-    fun shortestPathTest() {
-        graph.path()
     }
 }

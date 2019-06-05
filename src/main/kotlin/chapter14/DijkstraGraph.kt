@@ -18,7 +18,7 @@ import chapter14.MinimumWeightSpanningTree.WeightVertex
  */
 
 class DijkstraGraph(maxVerts: Int) : MatrixGraph(maxVerts) {
-    private val path = arrayOfNulls<DistPar>(maxVerts)
+    private val path = arrayOfNulls<ParentDistance>(maxVerts)
 
     init {
         repeat(maxVerts) { row ->
@@ -36,27 +36,27 @@ class DijkstraGraph(maxVerts: Int) : MatrixGraph(maxVerts) {
         adjustMatrix[start][end] = weight
     }
 
-    fun path() {
-        (vertexes[0] as WeightVertex).isInTree = true
+    fun path(startVertex: Int = 0) {
+        (vertexes[startVertex] as WeightVertex).isInTree = true
         var treeSize = 1
-        repeat(verts) { path[it] = DistPar(0, adjustMatrix[0][it]) }
+        repeat(verts) { path[it] = ParentDistance(startVertex, adjustMatrix[startVertex][it]) }
 
         while (treeSize < verts) {
-            val index = getMin()
+            val index = getMin(startVertex)
             if (path[index]?.distance == PSEUDO_INFINITY) {
                 println("There are unreachable vertices")
                 break
             }
             (vertexes[index] as WeightVertex).isInTree = true
             treeSize++
-            adjustPath(index, path[index]?.distance!!)
+            adjustPath(index, path[index]?.distance!!, startVertex)
         }
         resetFlags()
         displayPaths()
     }
 
-    private fun adjustPath(currentVertex: Int, startToCurrent: Int) {
-        var column = 1
+    private fun adjustPath(currentVertex: Int, startToCurrent: Int, startVertex: Int) {
+        var column = if (startVertex == 0) 1 else 0
         while (column < verts) {
             if ((vertexes[column] as WeightVertex).isInTree) {
                 column++
@@ -81,10 +81,10 @@ class DijkstraGraph(maxVerts: Int) : MatrixGraph(maxVerts) {
         println()
     }
 
-    private fun getMin(): Int {
+    private fun getMin(startVertex: Int): Int {
         var distance = PSEUDO_INFINITY
         var index = 0
-        for (i in 1 until verts) {
+        for (i in (if (startVertex == 0) 1 else 0) until verts) {
             if (!(vertexes[i] as WeightVertex).isInTree && path[i]!!.distance < distance) {
                 distance = path[i]!!.distance
                 index = i
@@ -101,5 +101,5 @@ class DijkstraGraph(maxVerts: Int) : MatrixGraph(maxVerts) {
         private const val PSEUDO_INFINITY = Int.MAX_VALUE / 2
     }
 
-    class DistPar(var parentVertex: Int, var distance: Int)
+    class ParentDistance(var parentVertex: Int, var distance: Int)
 }
