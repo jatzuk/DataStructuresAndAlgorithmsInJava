@@ -17,7 +17,7 @@ import chapter14.MinimumWeightSpanningTree.WeightVertex
  *                                           ***___***
  */
 
-class DijkstraGraph(maxVerts: Int) : MatrixGraph(maxVerts) {
+open class DijkstraGraph(maxVerts: Int) : MatrixGraph(maxVerts) {
     private val path = arrayOfNulls<ParentDistance>(maxVerts)
 
     init {
@@ -98,7 +98,7 @@ class DijkstraGraph(maxVerts: Int) : MatrixGraph(maxVerts) {
     }
 
     companion object {
-        private const val PSEUDO_INFINITY = Int.MAX_VALUE / 2
+        const val PSEUDO_INFINITY = Int.MAX_VALUE / 2
     }
 
     class ParentDistance(var parentVertex: Int, var distance: Int)
